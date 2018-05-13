@@ -11,7 +11,7 @@ public class UserData implements Parcelable {
     private String info3;
     private String info4;
 
-    //public UserData() { }
+    public UserData() { } //test
 
     public UserData(Parcel in) {
         readFromParcel(in);
