@@ -1,6 +1,5 @@
 package gym.managym;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -16,8 +15,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     private AlertDialog dialog;
@@ -47,22 +44,19 @@ public class LoginActivity extends AppCompatActivity {
                                 dialog.show();
 
                                 String userID = jsonResponse.getString("userID");
-                                String userPW =  jsonResponse.getString("userPW");
-                                String info1 =  jsonResponse.getString("info1");
-                                String info2 =  jsonResponse.getString("info2");
-                                String info3 =  jsonResponse.getString("info3");
-                                String info4 =  jsonResponse.getString("info4");
+                                String userPW = jsonResponse.getString("userPW");
+                                String info1 = jsonResponse.getString("info1");
+                                String info2 = jsonResponse.getString("info2");
+                                String info3 = jsonResponse.getString("info3");
+                                String info4 = jsonResponse.getString("info4");
 
+                                UserData userData = new UserData(userID, userPW, info1, info2, info3, info4); // parcelable
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("userID", userID);
-                                intent.putExtra("userPW", userPW);
-                                intent.putExtra("info1", info1);
-                                intent.putExtra("info2", info2);
-                                intent.putExtra("info3", info3);
-                                intent.putExtra("info4", info4);
+                                intent.putExtra("userData", userData);
                                 startActivity(intent);
                                 finish();
-                            } else {
+                            }
+                            else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
                                 dialog.show();
@@ -90,10 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                 String info2 = idText.getText().toString();
                 String info3 = idText.getText().toString();
                 String info4 = idText.getText().toString();
-                info1 = "a";
-                info2 = "b";
-                info3 = "c";
-                info4 = "d";
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
