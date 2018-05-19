@@ -16,7 +16,7 @@
         android:id="@+id/logoutButton"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:text="Logout" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/idText"
         android:text="ID"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textColor="#052e43"/>
 
     <TextView
@@ -32,38 +32,62 @@
         android:layout_height="wrap_content"
         android:id="@+id/pwText"
         android:text="PW"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textColor="#052e43"/>
 
     <TextView
-        android:id="@+id/info1Text"
+        android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="info1"
         android:textColor="#052e43"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/info2Text"
+        android:id="@+id/birthText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="info2"
         android:textColor="#052e43"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/info3Text"
+        android:id="@+id/phoneText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="info3"
+        android:text="phone"
         android:textColor="#052e43"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/info4Text"
+        android:id="@+id/weightText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="info4"
+        android:text="weight"
         android:textColor="#052e43"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/heightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="height"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/pointText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="point"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/adminText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="admin"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
 </LinearLayout>

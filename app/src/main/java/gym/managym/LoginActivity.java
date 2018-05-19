@@ -40,17 +40,22 @@ public class LoginActivity extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                dialog = builder.setMessage("Success!").setPositiveButton("OK", null).create();
-                                dialog.show();
 
                                 String userID = jsonResponse.getString("userID");
                                 String userPW = jsonResponse.getString("userPW");
-                                String info1 = jsonResponse.getString("info1");
-                                String info2 = jsonResponse.getString("info2");
-                                String info3 = jsonResponse.getString("info3");
-                                String info4 = jsonResponse.getString("info4");
+                                String name = jsonResponse.getString("name");
+                                String birth = jsonResponse.getString("birth");
+                                String phone = jsonResponse.getString("phone");
+                                int weight = jsonResponse.getInt("weight");
+                                int height = jsonResponse.getInt("height");
+                                int point = jsonResponse.getInt("point");
+                                int admin = jsonResponse.getInt("admin");
 
-                                UserData userData = new UserData(userID, userPW, info1, info2, info3, info4); // parcelable
+
+                                dialog = builder.setMessage("Success!").setPositiveButton("OK", null).create();
+                                dialog.show();
+
+                                UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin); // parcelable
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("userData", userData);
                                 startActivity(intent);
@@ -80,10 +85,9 @@ public class LoginActivity extends AppCompatActivity {
                 //LoginActivity.this.startActivity(registerIntent);
                 String userID = idText.getText().toString();
                 String userPW = pwText.getText().toString();
-                String info1 = idText.getText().toString();
-                String info2 = idText.getText().toString();
-                String info3 = idText.getText().toString();
-                String info4 = idText.getText().toString();
+                String name = idText.getText().toString();
+                String birth = idText.getText().toString();
+                String phone = idText.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -106,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 };
-                RegisterRequest registerRequest = new RegisterRequest(userID, userPW, info1, info2, info3, info4, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(userID, userPW, name, birth, phone, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(registerRequest);
             }

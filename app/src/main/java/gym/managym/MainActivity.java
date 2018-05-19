@@ -3,6 +3,7 @@ package gym.managym;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,19 +16,36 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView idText = findViewById(R.id.idText);
         final TextView pwText = findViewById(R.id.pwText);
-        final TextView info1Text = findViewById(R.id.info1Text);
-        final TextView info2Text = findViewById(R.id.info2Text);
-        final TextView info3Text = findViewById(R.id.info3Text);
-        final TextView info4Text = findViewById(R.id.info4Text);
+        final TextView nameText = findViewById(R.id.nameText);
+        final TextView birthText = findViewById(R.id.birthText);
+        final TextView phoneText = findViewById(R.id.phoneText);
+        final TextView weightText = findViewById(R.id.weightText);
+        final TextView heightText = findViewById(R.id.heightText);
+        final TextView pointText = findViewById(R.id.pointText);
+        final TextView adminText = findViewById(R.id.adminText);
 
         Bundle bundle = getIntent().getExtras();
         UserData userData = bundle.getParcelable("userData");
 
-        idText.setText(userData.getUserID());
-        pwText.setText(userData.getUserPW());
-        info1Text.setText(userData.getInfo1());
-        info2Text.setText(userData.getInfo2());
-        info3Text.setText(userData.getInfo3());
-        info4Text.setText(userData.getInfo4());
-        }
+
+        idText.setText("ID : " + userData.getUserID());
+        pwText.setText("PW : " + userData.getUserPW());
+        nameText.setText("Name : " + userData.getName());
+        birthText.setText("Birth : " + userData.getBirth());
+        phoneText.setText("Phone : " + userData.getPhone());
+        weightText.setText("Weight : " + userData.getWeight());
+        heightText.setText("Height : " + userData.getHeight());
+        pointText.setText("Point : " + userData.getPoint());
+        adminText.setText("Admin : " + userData.getAdmin());
+
+        final Button logoutButton = findViewById(R.id.logoutButton);
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
+}

@@ -10,15 +10,14 @@ public class RegisterRequest extends StringRequest {
     final static private String URL = "http://jeffjks.cafe24.com/UserRegister.php";
     private HashMap<String, String> parameters;
 
-    public RegisterRequest(String userID, String userPW, String info1, String info2, String info3, String info4, Response.Listener<String> listener) {
+    public RegisterRequest(String userID, String userPW, String name, String birth, String phone, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
         parameters.put("userID", userID);
         parameters.put("userPW", userPW);
-        parameters.put("info1", info1);
-        parameters.put("info2", info2);
-        parameters.put("info3", info3);
-        parameters.put("info4", info4);
+        parameters.put("name", name);
+        parameters.put("birth", birth);
+        parameters.put("phone", phone);
     }
 
     @Override
