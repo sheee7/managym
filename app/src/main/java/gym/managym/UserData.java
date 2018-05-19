@@ -14,8 +14,7 @@ public class UserData implements Parcelable {
     private int point;
     private int admin;
 
-    public UserData() {
-        }
+    public UserData() { } //test
 
     public UserData(Parcel in) {
         readFromParcel(in);
