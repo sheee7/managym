@@ -1,6 +1,8 @@
 package gym.managym;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         UserData userData = bundle.getParcelable("userData");
 
-
         idText.setText("ID : " + userData.getUserID());
         pwText.setText("PW : " + userData.getUserPW());
         nameText.setText("Name : " + userData.getName());
@@ -39,12 +40,36 @@ public class MainActivity extends AppCompatActivity {
         adminText.setText("Admin : " + userData.getAdmin());
 
         final Button logoutButton = findViewById(R.id.logoutButton);
+        final Button noticeButton = findViewById(R.id.noticeButton);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("로그아웃 하시겠습니까?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create();
+                builder.show();
+            }
+        });
+
+        noticeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }

@@ -39,8 +39,6 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-
                                 String userID = jsonResponse.getString("userID");
                                 String userPW = jsonResponse.getString("userPW");
                                 String name = jsonResponse.getString("name");
@@ -50,10 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                                 int height = jsonResponse.getInt("height");
                                 int point = jsonResponse.getInt("point");
                                 int admin = jsonResponse.getInt("admin");
-
-
-                                dialog = builder.setMessage("Success!").setPositiveButton("OK", null).create();
-                                dialog.show();
 
                                 UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin); // parcelable
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
