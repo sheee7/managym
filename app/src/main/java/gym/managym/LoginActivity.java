@@ -8,13 +8,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     private AlertDialog dialog;
@@ -71,44 +73,6 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
-
-        TextView registerButton = (TextView) findViewById(R.id.registerButton); // User Register (나중에 옮길 예정)
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                //LoginActivity.this.startActivity(registerIntent);
-                String userID = idText.getText().toString();
-                String userPW = pwText.getText().toString();
-                String name = idText.getText().toString();
-                String birth = idText.getText().toString();
-                String phone = idText.getText().toString();
-
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                dialog = builder.setMessage("Success!").setPositiveButton("OK", null).create();
-                                dialog.show();
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
-                                dialog.show();
-                            }
-                        }
-                        catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                RegisterRequest registerRequest = new RegisterRequest(userID, userPW, name, birth, phone, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-                queue.add(registerRequest);
-            }
-        });
     };
 
     @Override
@@ -118,5 +82,22 @@ public class LoginActivity extends AppCompatActivity {
             dialog.dismiss();
             dialog = null;
         }
+    }
+}
+
+class LoginRequest extends StringRequest {
+    final static private String URL = "http://jeffjks.cafe24.com/UserLogin.php";
+    private HashMap<String, String> parameters;
+
+    public LoginRequest(String userID, String userPW, Response.Listener<String> listener) {
+        super(Method.POST, URL, listener, null); // 해당 정보를 POST 방식으로 URL에 전송
+        parameters = new HashMap<>();
+        parameters.put("userID", userID);
+        parameters.put("userPW", userPW);
+    }
+
+    @Override
+    public HashMap<String, String> getParams() {
+        return parameters;
     }
 }

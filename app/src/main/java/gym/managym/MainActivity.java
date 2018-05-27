@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button logoutButton = findViewById(R.id.logoutButton);
         final Button noticeButton = findViewById(R.id.noticeButton);
+        final Button userManagementButton = findViewById(R.id.userManagementButton);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -69,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        userManagementButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserManagementActivity.class);
                 startActivity(intent);
             }
         });

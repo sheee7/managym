@@ -97,4 +97,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="Notice" />
+    <Button
+        android:id="@+id/userManagementButton"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="User Management" />
 </LinearLayout>
