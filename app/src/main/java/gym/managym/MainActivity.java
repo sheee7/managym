@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Bundle bundle = getIntent().getExtras();
+        final UserData userData = bundle.getParcelable("userData");
 
         final TextView idText = findViewById(R.id.idText);
         final TextView pwText = findViewById(R.id.pwText);
@@ -25,9 +26,6 @@ public class MainActivity extends AppCompatActivity {
         final TextView heightText = findViewById(R.id.heightText);
         final TextView pointText = findViewById(R.id.pointText);
         final TextView adminText = findViewById(R.id.adminText);
-
-        Bundle bundle = getIntent().getExtras();
-        UserData userData = bundle.getParcelable("userData");
 
         idText.setText("ID : " + userData.getUserID());
         pwText.setText("PW : " + userData.getUserPW());
@@ -70,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
+                intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         });

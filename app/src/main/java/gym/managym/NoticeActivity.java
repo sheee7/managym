@@ -30,7 +30,10 @@ public class NoticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
+        final Bundle bundle = getIntent().getExtras();
+        final UserData userData = bundle.getParcelable("userData");
 
+        final Button writeButton = findViewById(R.id.writeButton);
         final Button previousButton = findViewById(R.id.previousButton);
 
         noticeListView = findViewById(R.id.noticeListView);
@@ -40,6 +43,15 @@ public class NoticeActivity extends AppCompatActivity {
         noticeListView.setAdapter(adapter);
 
         new BackgroundTask().execute();
+
+        writeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { // Write Post
+                Intent intent = new Intent(NoticeActivity.this, NoticeWriteActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         previousButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -55,13 +67,6 @@ public class NoticeActivity extends AppCompatActivity {
                 String date = noticeList.get(position).getDate();
                 String content = noticeList.get(position).getContent();
 
-                //Toast.makeText(NoticeActivity.this, date, Toast.LENGTH_LONG).show();
-                /*
-                Intent intent = new Intent(NoticeActivity.this, NoticeContentActivity.class);
-                intent.putExtra("content", content);
-                startActivity(intent);*/
-
-
                 NoticeData noticeData = new NoticeData(title, name, date, content); // parcelable
                 Intent intent = new Intent(NoticeActivity.this, NoticeContentActivity.class);
                 intent.putExtra("noticeData", noticeData);
@@ -70,7 +75,7 @@ public class NoticeActivity extends AppCompatActivity {
         });
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
+    class BackgroundTask extends AsyncTask<Void, Void, String> { // Load ListView
         String target; // address to access
 
         @Override

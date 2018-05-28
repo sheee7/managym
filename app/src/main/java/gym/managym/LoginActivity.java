@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private AlertDialog dialog;
@@ -32,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                String textUserID = idText.getText().toString(); // id칸에 적힌 스트링 불러오기
-                String textUserPW = pwText.getText().toString();
+                final String textUserID = idText.getText().toString(); // id칸에 적힌 스트링 불러오기
+                final String textUserPW = pwText.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String> () {
                     public void onResponse(String response) {
@@ -87,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
 class LoginRequest extends StringRequest {
     final static private String URL = "http://jeffjks.cafe24.com/UserLogin.php";
-    private HashMap<String, String> parameters;
+    private Map<String, String> parameters;
 
     public LoginRequest(String userID, String userPW, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null); // 해당 정보를 POST 방식으로 URL에 전송
@@ -97,7 +98,7 @@ class LoginRequest extends StringRequest {
     }
 
     @Override
-    public HashMap<String, String> getParams() {
+    public Map<String, String> getParams() {
         return parameters;
     }
 }

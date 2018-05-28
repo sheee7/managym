@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_notice_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff" >
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context=".NoticeContentActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -47,6 +49,6 @@
         android:layout_gravity="center"
         android:padding="10dp"
         android:textColor="#000000"
-        android:background="@color/colorPrimaryBright"
+        android:background="#ffffff"
         />
 </LinearLayout>
