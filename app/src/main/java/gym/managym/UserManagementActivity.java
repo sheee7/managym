@@ -1,198 +1,293 @@
 package gym.managym;
 
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserManagementActivity extends AppCompatActivity {
-    private AlertDialog dialog;
-    boolean validate = false;
+    private ListView userListView;
+    private UserListAdapter adapter;
+    private List<UserListView> userList;
+    public static Activity userManagementActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_management);
+        userManagementActivity = UserManagementActivity.this;
 
-        final EditText idText = findViewById(R.id.idText);
-        final EditText pwText = findViewById(R.id.pwText);
-        final EditText pwCheckText = findViewById(R.id.pwCheckText);
-        final EditText nameText = findViewById(R.id.nameText);
-        final EditText birthText = findViewById(R.id.birthText);
-        final EditText phoneText = findViewById(R.id.phoneText);
-        final EditText weightText = findViewById(R.id.weightText);
-        final EditText heightText = findViewById(R.id.heightText); // 몸무게, 키 입력은 임시
-        final Button previousButton = findViewById(R.id.previousButton);
-        final Button validateButton = findViewById(R.id.validateButton);
         final Button registerButton = findViewById(R.id.registerButton);
 
-        validateButton.setOnClickListener(new View.OnClickListener() { // Validate ID
-            @Override
-            public void onClick(View view) {
-                final String userID = idText.getText().toString();
-                if (validate) {
-                    return;
-                }
-                if (userID.length() < 5) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                    dialog = builder.setMessage("아이디는 5자 이상이어야 합니다.")
-                            .setPositiveButton("OK", null)
-                            .create();
-                    return;
-                }
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                                dialog = builder.setMessage("사용할 수 있는 아이디입니다.").setPositiveButton("OK", null).create();
-                                dialog.show();
-                                idText.setEnabled(false);
-                                validate = true;
-                                idText.setBackgroundColor(getResources().getColor(R.color.colorGray));
-                                validateButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                                dialog = builder.setMessage("사용할 수 없는 아이디입니다.").setNegativeButton("OK", null).create();
-                                dialog.show();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                ValidateRequest validateRequest = new ValidateRequest(userID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(UserManagementActivity.this);
-                queue.add(validateRequest);
-            }
-        });
+        userListView = findViewById(R.id.userListView);
+        userList = new ArrayList<UserListView>();
+
+        adapter = new UserListAdapter(getApplicationContext(), userList);
+        userListView.setAdapter(adapter);
+
+        new UserManagementActivity.BackgroundTask().execute();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final String userID = idText.getText().toString();
-                final String userPW = pwText.getText().toString();
-                final String userPWCheck = pwCheckText.getText().toString();
-                final String userName = nameText.getText().toString();
-                final String userBirth = birthText.getText().toString();
-                final String userPhone = phoneText.getText().toString();
-                final String userWeight = weightText.getText().toString();
-                final String userHeight = heightText.getText().toString();
-
-                if (!validate) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                    dialog = builder.setMessage("아이디 중복 체크를 해주세요.").setPositiveButton("OK", null).create();
-                    dialog.show();
-                    return;
-                }
-                if (userPW.length() < 3) { // 임시 (6자 이상으로 변경 예정)
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                    dialog = builder.setMessage("비밀번호는 6자 이상이어야 합니다.").setPositiveButton("OK", null).create();
-                    dialog.show();
-                    return;
-                }
-                if (!userPW.equals(userPWCheck)) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                    dialog = builder.setMessage("비밀번호 확인이 올바르지 않습니다.").setNegativeButton("OK", null).create();
-                    dialog.show();
-                    return;
-                }
-                if (userID.equals("") || userPW.equals("") || userPWCheck.equals("") || userName.equals("") || userBirth.equals("") || userPhone.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                    dialog = builder.setMessage("빈 칸 없이 입력해주세요.").setNegativeButton("OK", null).create();
-                    dialog.show();
-                    return;
-                }
-
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                                dialog = builder.setMessage("Registered!").setPositiveButton("OK", null).create();
-                                dialog.show();
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                                dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
-                                dialog.show();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                RegisterRequest registerRequest = new RegisterRequest(userID, userPW, userName, userBirth, userPhone, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(UserManagementActivity.this);
-                queue.add(registerRequest);
+            public void onClick(View v) { // Register User
+                Intent intent = new Intent(UserManagementActivity.this, UserRegisterActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                finish();
+        userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // Read UserList
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String userID = userList.get(position).getUserID();
+                String name = userList.get(position).getName();
+                String birth = userList.get(position).getBirth();
+                String phone = userList.get(position).getPhone();
+                int weight = userList.get(position).getWeight();
+                int height = userList.get(position).getHeight();
+                int point = userList.get(position).getPoint();
+                int admin = userList.get(position).getAdmin();
+
+                UserListData userListData = new UserListData(userID, name, birth, phone, weight, height, point, admin);
+                Intent intent = new Intent(UserManagementActivity.this, UserContentActivity.class);
+                intent.putExtra("userListData", userListData);
+                startActivity(intent);
             }
         });
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        if (dialog != null) {
-            dialog.dismiss();
-            dialog = null;
+    public boolean onCreateOptionsMenu(Menu menu) { // Action Bar Setting
+        getMenuInflater().inflate(R.menu.activity_menu_default, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch(id){
+            case R.id.menu_back:
+                finish();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    class BackgroundTask extends AsyncTask<Void, Void, String> { // Load ListView
+        String target; // address to access
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://jeffjks.cafe24.com/UserList.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(target);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values) {
+            super.onProgressUpdate();
+        }
+
+        @Override
+        public void onPostExecute(String result) {
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+                String userID, name, birth, phone;
+                int weight, height, point, admin;
+                while(count < jsonArray.length()) {
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    userID = object.getString("userID");
+                    name = object.getString("name");
+                    birth = object.getString("birth");
+                    phone = object.getString("phone");
+                    weight = object.getInt("weight");
+                    height = object.getInt("height");
+                    point = object.getInt("point");
+                    admin = object.getInt("admin");
+                    UserListView user = new UserListView(userID, name, birth, phone, weight, height, point, admin);
+                    userList.add(user);
+                    adapter.notifyDataSetChanged();
+                    count++;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
 
-class RegisterRequest extends StringRequest {
-    final static private String URL = "http://jeffjks.cafe24.com/UserRegister.php";
-    private Map<String, String> parameters;
+class UserListView {
+    String userID;
+    String name;
+    String birth;
+    String phone;
+    int weight;
+    int height;
+    int point;
+    int admin;
 
-    public RegisterRequest(String userID, String userPW, String name, String birth, String phone, Response.Listener<String> listener) {
-        super(Method.POST, URL, listener, null);
-        parameters = new HashMap<>();
-        parameters.put("userID", userID);
-        parameters.put("userPW", userPW);
-        parameters.put("name", name);
-        parameters.put("birth", birth);
-        parameters.put("phone", phone);
+    public UserListView(String userID, String name, String birth, String phone, int weight, int height, int point, int admin) {
+        this.userID = userID;
+        this.name = name;
+        this.birth = birth;
+        this.phone = phone;
+        this.weight = weight;
+        this.height = height;
+        this.point = point;
+        this.admin = admin;
     }
 
-    @Override
-    public Map<String, String> getParams() {
-        return parameters;
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
+    public int getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(int admin) {
+        this.admin = admin;
     }
 }
 
-class ValidateRequest extends StringRequest {
-    final static private String URL = "http://jeffjks.cafe24.com/UserValidate.php";
-    private Map<String, String> userInfo;
+class UserListAdapter extends BaseAdapter {
+    private Context context;
+    private List<UserListView> userList;
 
-    public ValidateRequest(String userID, Response.Listener<String> listener) {
-        super(Method.POST, URL, listener, null);
-        userInfo = new HashMap<>();
-        userInfo.put("userID", userID);
+    public UserListAdapter(Context context, List<UserListView> userList) {
+        this.context = context;
+        this.userList = userList;
     }
 
     @Override
-    public Map<String, String> getParams() {
-        return userInfo;
+    public int getCount() {
+        return userList.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return userList.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        View v = View.inflate(context, R.layout.activity_user_listview, null);
+        TextView IDText = v.findViewById(R.id.userID);
+        TextView nameText = v.findViewById(R.id.userName);
+        TextView birthText = v.findViewById(R.id.userBirth);
+        TextView phoneText = v.findViewById(R.id.userPhone);
+
+        IDText.setText(userList.get(i).getUserID());
+        nameText.setText(userList.get(i).getName());
+        birthText.setText(userList.get(i).getBirth());
+        phoneText.setText(userList.get(i).getPhone());
+
+        v.setTag(userList.get(i).getUserID());
+        return v;
     }
 }

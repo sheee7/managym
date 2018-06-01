@@ -16,12 +16,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:text="Post" />
-            <Button
-                android:id="@+id/previousButton"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="Previous" />
         </RelativeLayout>
 
         <RelativeLayout

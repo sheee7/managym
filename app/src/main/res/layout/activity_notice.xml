@@ -12,22 +12,12 @@
     android:orientation="vertical"
     tools:context=".NoticeActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/writeButton"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Write" />
-        <Button
-            android:id="@+id/previousButton"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Previous" />
-    </RelativeLayout>
+    <Button
+        android:id="@+id/writeButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Write" />
 
     <TextView
         android:layout_width="wrap_content"

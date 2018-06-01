@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
 
         final EditText idText = findViewById(R.id.idText);
         final EditText pwText = findViewById(R.id.pwText);
@@ -76,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     };
 
-    @Override
+@Override
     protected void onStop() {
         super.onStop();
         if (dialog != null) {
