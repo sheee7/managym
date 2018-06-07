@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".TraineeMainActivity" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".NoticeContentActivity" />
         <activity android:name=".NoticeWriteActivity" />
