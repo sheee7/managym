@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".NoticeWriteActivity" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/postButton"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Post" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Title"
+                android:id="@+id/noticeWriteTitleText"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:background="@color/colorPrimary"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Title"
+                android:id="@+id/noticeWriteTitle"
+                android:layout_toRightOf="@id/noticeWriteTitleText"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:background="@color/colorPrimaryBright"
+                />
+        </RelativeLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="Content"
+        android:id="@+id/noticeWriteContent"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:background="#ffffff"
+        />
+</LinearLayout>
