@@ -62,6 +62,8 @@ public class NoticeActivity extends AppCompatActivity {
                 finish();
             }
         });
+        if (userData.getAdmin() == 0)
+            writeButton.setVisibility(View.GONE);
 
         noticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // Read Notice
             @Override

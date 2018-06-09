@@ -51,18 +51,19 @@ public class LoginActivity extends AppCompatActivity {
                                 int weight = jsonResponse.getInt("weight");
                                 int height = jsonResponse.getInt("height");
                                 int point = jsonResponse.getInt("point");
+                                String trainer = jsonResponse.getString("trainer");
                                 int admin = jsonResponse.getInt("admin");
 
-                                if(admin == 1) {
-                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin); // parcelable
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                if(admin == 0) {
+                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, trainer, admin); // parcelable
+                                    Intent intent = new Intent(LoginActivity.this, TraineeMainActivity.class);
                                     intent.putExtra("userData", userData);
                                     startActivity(intent);
                                     finish();
                                 }
                                 else {
-                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin);
-                                    Intent intent = new Intent(LoginActivity.this, TraineeMainActivity.class);
+                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, trainer, admin);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     intent.putExtra("userData", userData);
                                     startActivity(intent);
                                     finish();

@@ -39,6 +39,7 @@ public class UserContentActivity extends AppCompatActivity {
         final TextView weightText = findViewById(R.id.weightText);
         final TextView heightText = findViewById(R.id.heightText);
         final TextView pointText = findViewById(R.id.pointText);
+        final TextView trainerText = findViewById(R.id.trainerText);
         final TextView adminText = findViewById(R.id.adminText);
 
         bundle = getIntent().getExtras();
@@ -51,6 +52,7 @@ public class UserContentActivity extends AppCompatActivity {
         weightText.setText(String.valueOf(userListData.getWeight()));
         heightText.setText(String.valueOf(userListData.getHeight()));
         pointText.setText(String.valueOf(userListData.getPoint()));
+        pointText.setText(userListData.getTrainer());
         adminText.setText(String.valueOf(userListData.getAdmin()));
     }
 
@@ -159,6 +161,7 @@ class UserListData implements Parcelable {
     private int weight;
     private int height;
     private int point;
+    private String trainer;
     private int admin;
 
     public UserListData() { }
@@ -167,7 +170,7 @@ class UserListData implements Parcelable {
         readFromParcel(in);
     }
 
-    public UserListData(String userID, String name, String birth, String phone, int weight, int height, int point, int admin) {
+    public UserListData(String userID, String name, String birth, String phone, int weight, int height, int point, String trainer, int admin) {
         this.userID = userID;
         this.name = name;
         this.birth = birth;
@@ -175,6 +178,7 @@ class UserListData implements Parcelable {
         this.weight = weight;
         this.height = height;
         this.point = point;
+        this.trainer = trainer;
         this.admin = admin;
     }
 
@@ -213,6 +217,9 @@ class UserListData implements Parcelable {
     public int getPoint() {
         return point;
     }
+    public String getTrainer() {
+        return trainer;
+    }
     public int getAdmin() {
         return admin;
     }
@@ -225,6 +232,7 @@ class UserListData implements Parcelable {
         dest.writeInt(this.weight);
         dest.writeInt(this.height);
         dest.writeInt(this.point);
+        dest.writeString(this.trainer);
         dest.writeInt(this.admin);
     }
 
@@ -236,6 +244,7 @@ class UserListData implements Parcelable {
         weight = in.readInt();
         height = in.readInt();
         point = in.readInt();
+        trainer = in.readString();
         admin = in.readInt();
     }
 }

@@ -67,9 +67,10 @@ public class UserManagementActivity extends AppCompatActivity {
                 int weight = userList.get(position).getWeight();
                 int height = userList.get(position).getHeight();
                 int point = userList.get(position).getPoint();
+                String trainer = userList.get(position).getTrainer();
                 int admin = userList.get(position).getAdmin();
 
-                UserListData userListData = new UserListData(userID, name, birth, phone, weight, height, point, admin);
+                UserListData userListData = new UserListData(userID, name, birth, phone, weight, height, point, trainer, admin);
                 Intent intent = new Intent(UserManagementActivity.this, UserContentActivity.class);
                 intent.putExtra("userListData", userListData);
                 startActivity(intent);
@@ -139,7 +140,7 @@ public class UserManagementActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
-                String userID, name, birth, phone;
+                String userID, name, birth, phone ,trainer;
                 int weight, height, point, admin;
                 while(count < jsonArray.length()) {
                     JSONObject object = jsonArray.getJSONObject(count);
@@ -150,8 +151,9 @@ public class UserManagementActivity extends AppCompatActivity {
                     weight = object.getInt("weight");
                     height = object.getInt("height");
                     point = object.getInt("point");
+                    trainer = object.getString("point");
                     admin = object.getInt("admin");
-                    UserListView user = new UserListView(userID, name, birth, phone, weight, height, point, admin);
+                    UserListView user = new UserListView(userID, name, birth, phone, weight, height, point, trainer, admin);
                     userList.add(user);
                     adapter.notifyDataSetChanged();
                     count++;
@@ -169,12 +171,13 @@ class UserListView {
     String name;
     String birth;
     String phone;
+    String trainer;
     int weight;
     int height;
     int point;
     int admin;
 
-    public UserListView(String userID, String name, String birth, String phone, int weight, int height, int point, int admin) {
+    public UserListView(String userID, String name, String birth, String phone, int weight, int height, int point, String trainer, int admin) {
         this.userID = userID;
         this.name = name;
         this.birth = birth;
@@ -182,6 +185,7 @@ class UserListView {
         this.weight = weight;
         this.height = height;
         this.point = point;
+        this.trainer = trainer;
         this.admin = admin;
     }
 
@@ -239,6 +243,14 @@ class UserListView {
 
     public void setPoint(int point) {
         this.point = point;
+    }
+
+    public String getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(String trainer) {
+        this.trainer = trainer;
     }
 
     public int getAdmin() {

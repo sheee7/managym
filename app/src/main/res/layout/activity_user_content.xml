@@ -69,6 +69,14 @@
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/trainerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="trainer"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/adminText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
