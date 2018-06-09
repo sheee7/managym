@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 else {
                                     UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, trainer, admin);
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, TrainerMainActivity.class);
                                     intent.putExtra("userData", userData);
                                     startActivity(intent);
                                     finish();
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
-    };
+    }
 
 @Override
     protected void onStop() {

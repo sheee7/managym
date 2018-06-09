@@ -77,14 +77,6 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/trainerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="trainer"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
         android:id="@+id/adminText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,40 +84,94 @@
         android:textColor="#052e43"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/trainerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="trainer"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/attendButton"
-            android:layout_width="160dp"
+
+        <LinearLayout
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:text="Attend GYM"
-            android:layout_gravity="start"/>
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/attendButton"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:text="Attend GYM"
+                android:layout_gravity="start"/>
+
+            <LinearLayout
+                android:layout_width="160dp"
+                android:layout_height="90dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/workoutDataButton"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
+                    android:text="Workout Data"
+                    android:layout_gravity="start"/>
+                <Button
+                    android:id="@+id/bodyDataButton"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
+                    android:text="Body Data"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/pointRecordButton"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:text="Point Record"
+                android:layout_gravity="start"/>
+        </LinearLayout>
+
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-        <Button
-            android:id="@+id/noticeButton"
-            android:layout_width="160dp"
+
+        <LinearLayout
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:text="Notice"
-            android:layout_gravity="end"/>
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/noticeButton"
+                android:layout_width="160dp"
+                android:layout_height="120dp"
+                android:text="Notice"
+                android:layout_gravity="end"/>
+            <LinearLayout
+                android:layout_width="160dp"
+                android:layout_height="90dp"
+                android:orientation="horizontal"
+                android:layout_gravity="end">
+            <Button
+                android:id="@+id/gymProgramButton"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:text="GYM Program"
+                android:layout_gravity="end"/>
+            <Button
+                android:id="@+id/MessengerButton"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:text="Messenger"
+                android:layout_gravity="end"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-
-
-
-
-
 
 </LinearLayout>
