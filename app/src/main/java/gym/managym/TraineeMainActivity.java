@@ -44,7 +44,7 @@ public class TraineeMainActivity extends AppCompatActivity {
         weightText.setText("Weight : " + userData.getWeight());
         heightText.setText("Height : " + userData.getHeight());
         pointText.setText("Point : " + userData.getPoint());
-        trainerText.setText("My Trainer : " + userData.getTrainer());
+        pointText.setText("Trainer : " + userData.getTrainer());
         adminText.setText("Admin : " + userData.getAdmin());
 
         final Button noticeButton = findViewById(R.id.noticeButton);

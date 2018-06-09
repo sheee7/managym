@@ -151,7 +151,7 @@ public class UserManagementActivity extends AppCompatActivity {
                     weight = object.getInt("weight");
                     height = object.getInt("height");
                     point = object.getInt("point");
-                    trainer = object.getString("point");
+                    trainer = object.getString("trainer");
                     admin = object.getInt("admin");
                     UserListView user = new UserListView(userID, name, birth, phone, weight, height, point, trainer, admin);
                     userList.add(user);
