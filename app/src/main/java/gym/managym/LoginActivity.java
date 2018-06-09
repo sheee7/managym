@@ -53,11 +53,20 @@ public class LoginActivity extends AppCompatActivity {
                                 int point = jsonResponse.getInt("point");
                                 int admin = jsonResponse.getInt("admin");
 
-                                UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin); // parcelable
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("userData", userData);
-                                startActivity(intent);
-                                finish();
+                                if(admin == 1) {
+                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin); // parcelable
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra("userData", userData);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else {
+                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin);
+                                    Intent intent = new Intent(LoginActivity.this, TraineeMainActivity.class);
+                                    intent.putExtra("userData", userData);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             }
                             else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

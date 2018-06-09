@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_trainee_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="10dp"
@@ -10,7 +10,7 @@
     android:paddingBottom="5dp"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".TraineeMainActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -90,11 +90,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/userManagementButton"
+            android:id="@+id/attendGym"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="User Management" />
+            android:text="Attend GYM"
+            android:layout_gravity="start"/>
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
