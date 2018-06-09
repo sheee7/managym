@@ -96,6 +96,14 @@ tools:context=".UserModifyActivity">
         android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
         />
+
+    <Spinner
+        android:id="@+id/trainerSpinner"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
+
     <RelativeLayout
         android:layout_width="280dp"
         android:layout_height="wrap_content"

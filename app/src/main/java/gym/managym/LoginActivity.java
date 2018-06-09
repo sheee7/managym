@@ -63,7 +63,11 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 else {
                                     UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, trainer, admin);
+<<<<<<< HEAD
                                     Intent intent = new Intent(LoginActivity.this, TrainerMainActivity.class);
+=======
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+>>>>>>> ac01bfe878123fd8958a3d9eadbb5324d7abbbd4
                                     intent.putExtra("userData", userData);
                                     startActivity(intent);
                                     finish();
