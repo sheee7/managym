@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_trainee_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context=".TraineeMainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/idText"
+        android:text="ID"
+        android:textSize="18sp"
+        android:textColor="#052e43"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pwText"
+        android:text="PW"
+        android:textSize="18sp"
+        android:textColor="#052e43"/>
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="info1"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/birthText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="info2"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="phone"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/weightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="weight"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/heightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="height"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/pointText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="point"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/adminText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="admin"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/trainerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="trainer"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/attendButton"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:text="Attend GYM"
+                android:layout_gravity="start"/>
+
+            <LinearLayout
+                android:layout_width="160dp"
+                android:layout_height="90dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/workoutDataButton"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
+                    android:text="Workout Data"
+                    android:layout_gravity="start"/>
+                <Button
+                    android:id="@+id/bodyDataButton"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
+                    android:text="Body Data"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/pointRecordButton"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:text="Point Record"
+                android:layout_gravity="start"/>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/noticeButton"
+                android:layout_width="160dp"
+                android:layout_height="120dp"
+                android:text="Notice"
+                android:layout_gravity="end"/>
+            <LinearLayout
+                android:layout_width="160dp"
+                android:layout_height="90dp"
+                android:orientation="horizontal"
+                android:layout_gravity="end">
+            <Button
+                android:id="@+id/gymProgramButton"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:text="GYM Program"
+                android:layout_gravity="end"/>
+            <Button
+                android:id="@+id/MessengerButton"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:text="Messenger"
+                android:layout_gravity="end"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
