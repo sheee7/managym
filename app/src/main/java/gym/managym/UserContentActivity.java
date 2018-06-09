@@ -45,15 +45,15 @@ public class UserContentActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         userListData = bundle.getParcelable("userListData");
 
-        userIDText.setText(userListData.getUserID());
-        nameText.setText(userListData.getName());
-        birthText.setText(userListData.getBirth());
-        phoneText.setText(userListData.getPhone());
-        weightText.setText(String.valueOf(userListData.getWeight()));
-        heightText.setText(String.valueOf(userListData.getHeight()));
-        pointText.setText(String.valueOf(userListData.getPoint()));
-        pointText.setText(userListData.getTrainer());
-        adminText.setText(String.valueOf(userListData.getAdmin()));
+        userIDText.setText("ID : "+userListData.getUserID());
+        nameText.setText("Name : "+userListData.getName());
+        birthText.setText("Birth : "+userListData.getBirth());
+        phoneText.setText("Phone : "+userListData.getPhone());
+        weightText.setText("Weight : "+String.valueOf(userListData.getWeight()));
+        heightText.setText("Height : "+String.valueOf(userListData.getHeight()));
+        pointText.setText("Point : "+String.valueOf(userListData.getPoint()));
+        trainerText.setText("Trainer : "+userListData.getTrainer());
+        adminText.setText("Admin : "+String.valueOf(userListData.getAdmin()));
     }
 
     @Override
