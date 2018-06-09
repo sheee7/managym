@@ -50,13 +50,10 @@ public class NoticeContentActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_menu_content, menu); // getMenuInflater 를 사용해서 xml 파일 가져옴
-        if(userData.getAdmin()==0) {
-            MenuItem item1 = menu.findItem(R.id.menu_action_modify);
-            MenuItem item2 = menu.findItem(R.id.menu_action_delete);
-            item1.setVisible(false);
-            item2.setVisible(false);
-        }
+        if (userData.getAdmin() == 0)
+            getMenuInflater().inflate(R.menu.activity_menu_default, menu);
+        else
+            getMenuInflater().inflate(R.menu.activity_menu_content, menu); // Admin일 경우 수정 가능
         return true;
     }
 

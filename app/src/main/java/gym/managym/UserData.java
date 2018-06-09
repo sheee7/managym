@@ -3,10 +3,6 @@ package gym.managym;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 class UserData implements Parcelable {
     private String userID;
     private String userPW;
@@ -16,6 +12,7 @@ class UserData implements Parcelable {
     private int weight;
     private int height;
     private int point;
+    private String trainer;
     private int admin;
 
     public UserData() { } //test
@@ -24,7 +21,7 @@ class UserData implements Parcelable {
         readFromParcel(in);
     }
 
-    public UserData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, int admin) {
+    public UserData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, String trainer, int admin) {
         this.userID = userID;
         this.userPW = userPW;
         this.name = name;
@@ -33,6 +30,7 @@ class UserData implements Parcelable {
         this.weight = weight;
         this.height = height;
         this.point = point;
+        this.trainer = trainer;
         this.admin = admin;
     }
 
@@ -74,6 +72,9 @@ class UserData implements Parcelable {
     public int getPoint() {
         return point;
     }
+    public String getTrainer() {
+        return trainer;
+    }
     public int getAdmin() {
         return admin;
     }
@@ -87,6 +88,7 @@ class UserData implements Parcelable {
         dest.writeInt(this.weight);
         dest.writeInt(this.height);
         dest.writeInt(this.point);
+        dest.writeString(this.trainer);
         dest.writeInt(this.admin);
     }
     private void readFromParcel(Parcel in) {
@@ -98,40 +100,7 @@ class UserData implements Parcelable {
         weight = in.readInt();
         height = in.readInt();
         point = in.readInt();
+        trainer = in.readString();
         admin = in.readInt();
     }
-}
-
-class TrainerData extends UserData {
-    ArrayList<String> myTraineeIDs;
-
-    public TrainerData() { super(); } //test
-
-    public TrainerData(Parcel in) {
-        super(in);
-    }
-
-    public TrainerData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, int admin) {
-        super(userID, userPW, name, birth, phone, weight, height, point, admin);
-        // Trainee ID를 받는 부분이 여기 들어가야함.
-
-    }
-
-}
-
-class TraineeData extends UserData {
-    private String myTrainerID; //담당 트레이너의 ID
-
-    public TraineeData() { super(); } //test
-
-    public TraineeData(Parcel in) {
-        super(in);
-    }
-
-    public TraineeData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, int admin, String myTrainerID) {
-        super(userID, userPW, name, birth, phone, weight, height, point, admin);
-        this.myTrainerID = myTrainerID;
-    }
-
-    public String getMyTrainerID() { return myTrainerID; }
 }

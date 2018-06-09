@@ -33,6 +33,7 @@ public class TraineeMainActivity extends AppCompatActivity {
         final TextView weightText = findViewById(R.id.weightText);
         final TextView heightText = findViewById(R.id.heightText);
         final TextView pointText = findViewById(R.id.pointText);
+        final TextView trainerText = findViewById(R.id.trainerText);
         final TextView adminText = findViewById(R.id.adminText);
 
         idText.setText("ID : " + userData.getUserID());
@@ -43,15 +44,24 @@ public class TraineeMainActivity extends AppCompatActivity {
         weightText.setText("Weight : " + userData.getWeight());
         heightText.setText("Height : " + userData.getHeight());
         pointText.setText("Point : " + userData.getPoint());
+        trainerText.setText("My Trainer : " + userData.getTrainer());
         adminText.setText("Admin : " + userData.getAdmin());
 
         final Button noticeButton = findViewById(R.id.noticeButton);
+        final Button attendButton = findViewById(R.id.attendButton);
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(TraineeMainActivity.this, NoticeActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
+            }
+        });
+
+        attendButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Intent intent = new Intent(TraineeMainActivity.this, attendActivity.class);
+                //startActivity(intent);
             }
         });
     }

@@ -30,7 +30,7 @@ import java.util.List;
 public class NoticeActivity extends AppCompatActivity {
     private ListView noticeListView;
     private NoticeListAdapter adapter;
-    private ArrayList<NoticeListView> noticeList;
+    private List<NoticeListView> noticeList;
     private Bundle bundle;
     private UserData userData;
     public static Activity noticeActivity;
@@ -45,12 +45,8 @@ public class NoticeActivity extends AppCompatActivity {
 
         final Button writeButton = findViewById(R.id.writeButton);
 
-        if(userData.getAdmin() == 0) {
-            writeButton.setVisibility(View.GONE);
-        }
-
         noticeListView = findViewById(R.id.noticeListView);
-        noticeList = new ArrayList<>();
+        noticeList = new ArrayList<NoticeListView>();
 
         adapter = new NoticeListAdapter(getApplicationContext(), noticeList);
         noticeListView.setAdapter(adapter);
@@ -66,6 +62,8 @@ public class NoticeActivity extends AppCompatActivity {
                 finish();
             }
         });
+        if (userData.getAdmin() == 0)
+            writeButton.setVisibility(View.GONE);
 
         noticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // Read Notice
             @Override
