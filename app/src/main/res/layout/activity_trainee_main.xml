@@ -77,14 +77,6 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/trainerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="trainer"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
         android:id="@+id/adminText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,15 +96,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-<<<<<<< HEAD
 
         <LinearLayout
             android:layout_width="170dp"
-=======
-        <Button
-            android:id="@+id/attendButton"
-            android:layout_width="160dp"
->>>>>>> ac01bfe878123fd8958a3d9eadbb5324d7abbbd4
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
