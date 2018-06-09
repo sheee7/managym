@@ -3,6 +3,10 @@ package gym.managym;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 class UserData implements Parcelable {
     private String userID;
     private String userPW;
@@ -96,4 +100,38 @@ class UserData implements Parcelable {
         point = in.readInt();
         admin = in.readInt();
     }
+}
+
+class TrainerData extends UserData {
+    ArrayList<String> myTraineeIDs;
+
+    public TrainerData() { super(); } //test
+
+    public TrainerData(Parcel in) {
+        super(in);
+    }
+
+    public TrainerData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, int admin) {
+        super(userID, userPW, name, birth, phone, weight, height, point, admin);
+        // Trainee ID를 받는 부분이 여기 들어가야함.
+
+    }
+
+}
+
+class TraineeData extends UserData {
+    private String myTrainerID; //담당 트레이너의 ID
+
+    public TraineeData() { super(); } //test
+
+    public TraineeData(Parcel in) {
+        super(in);
+    }
+
+    public TraineeData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, int admin, String myTrainerID) {
+        super(userID, userPW, name, birth, phone, weight, height, point, admin);
+        this.myTrainerID = myTrainerID;
+    }
+
+    public String getMyTrainerID() { return myTrainerID; }
 }

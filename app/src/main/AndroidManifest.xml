@@ -19,7 +19,7 @@
                 />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".TrainerMainActivity" />
         <activity android:name=".TraineeMainActivity" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".NoticeContentActivity" />
@@ -27,7 +27,7 @@
         <activity android:name=".UserManagementActivity" />
         <activity android:name=".UserRegisterActivity" />
         <activity android:name=".UserContentActivity" />
-        <activity android:name=".UserModifyActivity"></activity>
+        <activity android:name=".UserModifyActivity" />
     </application>
 
 </manifest>

@@ -2,8 +2,6 @@ package gym.managym;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,14 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class TrainerMainActivity extends AppCompatActivity {
     private Bundle bundle;
     private UserData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_trainer_main);
 
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
+                Intent intent = new Intent(TrainerMainActivity.this, NoticeActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         userManagementButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserManagementActivity.class);
+                Intent intent = new Intent(TrainerMainActivity.this, UserManagementActivity.class);
                 startActivity(intent);
             }
         });
@@ -89,13 +87,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(TrainerMainActivity.this);
         builder.setMessage("로그아웃 하시겠습니까?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(TrainerMainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

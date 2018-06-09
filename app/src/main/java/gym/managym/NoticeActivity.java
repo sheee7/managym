@@ -30,7 +30,7 @@ import java.util.List;
 public class NoticeActivity extends AppCompatActivity {
     private ListView noticeListView;
     private NoticeListAdapter adapter;
-    private List<NoticeListView> noticeList;
+    private ArrayList<NoticeListView> noticeList;
     private Bundle bundle;
     private UserData userData;
     public static Activity noticeActivity;
@@ -45,8 +45,12 @@ public class NoticeActivity extends AppCompatActivity {
 
         final Button writeButton = findViewById(R.id.writeButton);
 
+        if(userData.getAdmin() == 0) {
+            writeButton.setVisibility(View.GONE);
+        }
+
         noticeListView = findViewById(R.id.noticeListView);
-        noticeList = new ArrayList<NoticeListView>();
+        noticeList = new ArrayList<>();
 
         adapter = new NoticeListAdapter(getApplicationContext(), noticeList);
         noticeListView.setAdapter(adapter);

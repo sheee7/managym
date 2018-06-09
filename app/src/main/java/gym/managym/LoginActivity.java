@@ -54,14 +54,14 @@ public class LoginActivity extends AppCompatActivity {
                                 int admin = jsonResponse.getInt("admin");
 
                                 if(admin == 1) {
-                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin); // parcelable
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    UserData userData = new TrainerData(userID, userPW, name, birth, phone, weight, height, point, admin); // parcelable
+                                    Intent intent = new Intent(LoginActivity.this, TrainerMainActivity.class);
                                     intent.putExtra("userData", userData);
                                     startActivity(intent);
                                     finish();
                                 }
                                 else {
-                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin);
+                                    UserData userData = new TraineeData(userID, userPW, name, birth, phone, weight, height, point, admin, jsonResponse.getString("trainer"));
                                     Intent intent = new Intent(LoginActivity.this, TraineeMainActivity.class);
                                     intent.putExtra("userData", userData);
                                     startActivity(intent);
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
-    };
+    }
 
 @Override
     protected void onStop() {
