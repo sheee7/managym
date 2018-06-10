@@ -19,6 +19,29 @@
         android:layout_alignParentLeft="true"
         android:text="Create" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/myGymProgramText"
+        android:text="My GYM Program"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textColor="#052e43"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/myProgramListView"
+        android:layout_margin="10dp"
+        android:dividerHeight="5dp"
+        android:divider="#ffffff"
+        >
+    </ListView>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
