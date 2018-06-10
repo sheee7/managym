@@ -7,25 +7,32 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserRegisterActivity extends AppCompatActivity {
     private AlertDialog dialog;
     boolean validate = false;
+    private ArrayList<String> trainerList = new ArrayList<String>();
     private UserManagementActivity userManagementActivity = (UserManagementActivity) UserManagementActivity.userManagementActivity;
 
     @Override
@@ -39,10 +46,50 @@ public class UserRegisterActivity extends AppCompatActivity {
         final EditText nameText = findViewById(R.id.nameText);
         final EditText birthText = findViewById(R.id.birthText);
         final EditText phoneText = findViewById(R.id.phoneText);
-        final EditText weightText = findViewById(R.id.weightText);
-        final EditText heightText = findViewById(R.id.heightText); // 몸무게, 키 입력은 임시
+        final Spinner trainerSpinner = findViewById(R.id.trainerSpinner);
+        //final EditText weightText = findViewById(R.id.weightText);
+        //final EditText heightText = findViewById(R.id.heightText);
         final Button validateButton = findViewById(R.id.validateButton);
         final Button registerButton = findViewById(R.id.registerAcceptButton);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, trainerList);
+
+        Response.Listener<String> responseListener = new Response.Listener<String> () {
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("response");
+                    int count = 0;
+                    while(count < jsonArray.length()) {
+                        JSONObject object = jsonArray.getJSONObject(count);
+                        trainerList.add(object.getString("trainer"));
+                        adapter.notifyDataSetChanged();
+                        count++;
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        TrainerSearch trainerSearch = new TrainerSearch(responseListener);
+        RequestQueue queue = Volley.newRequestQueue(UserRegisterActivity.this);
+        queue.add(trainerSearch);
+
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        trainerSpinner.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        trainerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //testTrainer.setText(trainerList.get(position));
+                trainerSpinner.setSelection(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         validateButton.setOnClickListener(new View.OnClickListener() { // Validate ID
             @Override
@@ -94,11 +141,12 @@ public class UserRegisterActivity extends AppCompatActivity {
                 final String userID = idText.getText().toString();
                 final String userPW = pwText.getText().toString();
                 final String userPWCheck = pwCheckText.getText().toString();
-                final String userName = nameText.getText().toString();
-                final String userBirth = birthText.getText().toString();
-                final String userPhone = phoneText.getText().toString();
-                final String userWeight = weightText.getText().toString();
-                final String userHeight = heightText.getText().toString();
+                final String name = nameText.getText().toString();
+                final String birth = birthText.getText().toString();
+                final String phone = phoneText.getText().toString();
+                final String trainer = trainerList.get(trainerSpinner.getSelectedItemPosition());
+                //final String userWeight = weightText.getText().toString();
+                //final String userHeight = heightText.getText().toString();
 
                 if (!validate) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserRegisterActivity.this);
@@ -118,7 +166,7 @@ public class UserRegisterActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
-                if (userID.equals("") || userPW.equals("") || userPWCheck.equals("") || userName.equals("") || userBirth.equals("") || userPhone.equals("")) {
+                if (userID.equals("") || userPW.equals("") || userPWCheck.equals("") || name.equals("") || birth.equals("") || phone.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserRegisterActivity.this);
                     dialog = builder.setMessage("빈 칸 없이 입력해주세요.").setNegativeButton("OK", null).create();
                     dialog.show();
@@ -153,7 +201,7 @@ public class UserRegisterActivity extends AppCompatActivity {
                         }
                     }
                 };
-                RegisterRequest registerRequest = new RegisterRequest(userID, userPW, userName, userBirth, userPhone, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(userID, userPW, name, birth, phone, trainer, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(UserRegisterActivity.this);
                 queue.add(registerRequest);
             }
@@ -205,7 +253,7 @@ class RegisterRequest extends StringRequest {
     final static private String URL = "http://jeffjks.cafe24.com/UserRegister.php";
     private Map<String, String> parameters;
 
-    public RegisterRequest(String userID, String userPW, String name, String birth, String phone, Response.Listener<String> listener) {
+    public RegisterRequest(String userID, String userPW, String name, String birth, String phone, String trainer, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
         parameters.put("userID", userID);
@@ -213,6 +261,7 @@ class RegisterRequest extends StringRequest {
         parameters.put("name", name);
         parameters.put("birth", birth);
         parameters.put("phone", phone);
+        parameters.put("trainer", trainer);
     }
 
     @Override
