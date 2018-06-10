@@ -13,9 +13,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class TraineeMainActivity extends AppCompatActivity {
     private Bundle bundle;
     private TraineeData userData;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +60,7 @@ public class TraineeMainActivity extends AppCompatActivity {
 
         final Button noticeButton = findViewById(R.id.noticeButton);
         final Button attendButton = findViewById(R.id.attendButton);
+        final Button messengerButton = findViewById(R.id.messengerButton);
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -62,6 +74,14 @@ public class TraineeMainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Intent intent = new Intent(TraineeMainActivity.this, attendActivity.class);
                 //startActivity(intent);
+            }
+        });
+
+        messengerButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(TraineeMainActivity.this, MessengerActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
             }
         });
     }
@@ -112,4 +132,3 @@ public class TraineeMainActivity extends AppCompatActivity {
         builder.show();
     }
 }
-

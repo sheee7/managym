@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MessengerWriteActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Send" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="To"
+            android:id="@+id/messageWriteToText"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textStyle="bold"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/messageWriteTo"
+            android:layout_toRightOf="@id/messageWriteToText"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:background="@color/colorPrimaryBright"
+            />
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/messageWriteContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:hint="Content"
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        android:textColor="#000000" />
+</LinearLayout>
