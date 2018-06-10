@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class TraineeMainActivity extends AppCompatActivity {
     private Bundle bundle;
-    private UserData userData;
+    private TraineeData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class TraineeMainActivity extends AppCompatActivity {
         weightText.setText("Weight : " + userData.getWeight());
         heightText.setText("Height : " + userData.getHeight());
         pointText.setText("Point : " + userData.getPoint());
-        pointText.setText("Trainer : " + userData.getTrainer());
+        trainerText.setText("Trainer : " + userData.getTrainer());
         adminText.setText("Admin : " + userData.getAdmin());
 
         final Button noticeButton = findViewById(R.id.noticeButton);

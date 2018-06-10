@@ -55,14 +55,14 @@ public class LoginActivity extends AppCompatActivity {
                                 int admin = jsonResponse.getInt("admin");
 
                                 if(admin == 0) {
-                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, trainer, admin); // parcelable
+                                    TraineeData userData = new TraineeData(userID, userPW, name, birth, phone, weight, height, point, trainer, admin); // parcelable
                                     Intent intent = new Intent(LoginActivity.this, TraineeMainActivity.class);
                                     intent.putExtra("userData", userData);
                                     startActivity(intent);
                                     finish();
                                 }
                                 else {
-                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, trainer, admin);
+                                    UserData userData = new UserData(userID, userPW, name, birth, phone, weight, height, point, admin);
                                     Intent intent = new Intent(LoginActivity.this, TrainerMainActivity.class);
                                     intent.putExtra("userData", userData);
                                     startActivity(intent);

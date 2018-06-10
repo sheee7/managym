@@ -12,7 +12,6 @@ class UserData implements Parcelable {
     private int weight;
     private int height;
     private int point;
-    private String trainer;
     private int admin;
 
     public UserData() { } //test
@@ -21,7 +20,7 @@ class UserData implements Parcelable {
         readFromParcel(in);
     }
 
-    public UserData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, String trainer, int admin) {
+    public UserData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, int admin) {
         this.userID = userID;
         this.userPW = userPW;
         this.name = name;
@@ -30,7 +29,6 @@ class UserData implements Parcelable {
         this.weight = weight;
         this.height = height;
         this.point = point;
-        this.trainer = trainer;
         this.admin = admin;
     }
 
@@ -72,9 +70,6 @@ class UserData implements Parcelable {
     public int getPoint() {
         return point;
     }
-    public String getTrainer() {
-        return trainer;
-    }
     public int getAdmin() {
         return admin;
     }
@@ -88,10 +83,9 @@ class UserData implements Parcelable {
         dest.writeInt(this.weight);
         dest.writeInt(this.height);
         dest.writeInt(this.point);
-        dest.writeString(this.trainer);
         dest.writeInt(this.admin);
     }
-    private void readFromParcel(Parcel in) {
+    void readFromParcel(Parcel in) {
         userID = in.readString();
         userPW = in.readString();
         name = in.readString();
@@ -100,7 +94,45 @@ class UserData implements Parcelable {
         weight = in.readInt();
         height = in.readInt();
         point = in.readInt();
-        trainer = in.readString();
         admin = in.readInt();
+    }
+}
+
+class TraineeData extends UserData {
+    private String trainer;
+
+    public TraineeData() {
+        super();
+    }
+    public TraineeData(Parcel in) {
+        super(in);
+    }
+    public TraineeData(String userID, String userPW, String name, String birth, String phone, int weight, int height, int point, String trainer, int admin) {
+        super(userID, userPW, name, birth, phone, weight, height, point, admin);
+        this.trainer = trainer;
+    }
+
+    public String getTrainer() {
+        return trainer;
+    }
+
+    public static final Creator<TraineeData> CREATOR = new Creator<TraineeData>() {
+        public TraineeData createFromParcel(Parcel in) {
+            return new TraineeData(in);
+        }
+
+        public TraineeData[] newArray (int size) {
+            return new TraineeData[size];
+        }
+    };
+
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.trainer);
+    }
+
+    public void readFromParcel(Parcel in) {
+        super.readFromParcel(in);
+        trainer = in.readString();
     }
 }

@@ -32,7 +32,7 @@ import java.util.Map;
 public class UserRegisterActivity extends AppCompatActivity {
     private AlertDialog dialog;
     boolean validate = false;
-    private ArrayList<String> trainerList = new ArrayList<String>();
+    private ArrayList<String> trainerList = new ArrayList<>();
     private UserManagementActivity userManagementActivity = (UserManagementActivity) UserManagementActivity.userManagementActivity;
 
     @Override
@@ -51,7 +51,7 @@ public class UserRegisterActivity extends AppCompatActivity {
         //final EditText heightText = findViewById(R.id.heightText);
         final Button validateButton = findViewById(R.id.validateButton);
         final Button registerButton = findViewById(R.id.registerAcceptButton);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, trainerList);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, trainerList);
 
         Response.Listener<String> responseListener = new Response.Listener<String> () {
             public void onResponse(String response) {
