@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_gymprogram_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context=".GymProgramContentsActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Program Name"
+        android:id="@+id/programNameText"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Trainer ID"
+        android:id="@+id/trainerNameText"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Period"
+        android:id="@+id/programPeriodText"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Content"
+        android:id="@+id/programContentText"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:background="#ffffff"
+        />
+</LinearLayout>
