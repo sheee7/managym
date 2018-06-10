@@ -61,6 +61,7 @@ public class TraineeMainActivity extends AppCompatActivity {
         final Button noticeButton = findViewById(R.id.noticeButton);
         final Button attendButton = findViewById(R.id.attendButton);
         final Button messengerButton = findViewById(R.id.messengerButton);
+        final Button gymProgramButton = findViewById(R.id.gymProgramButton);
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -74,6 +75,15 @@ public class TraineeMainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Intent intent = new Intent(TraineeMainActivity.this, attendActivity.class);
                 //startActivity(intent);
+            }
+        });
+
+        gymProgramButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TraineeMainActivity.this, GymProgramActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
             }
         });
 

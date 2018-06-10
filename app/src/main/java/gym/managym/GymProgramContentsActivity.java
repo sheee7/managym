@@ -51,7 +51,7 @@ public class GymProgramContentsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(userData.getAdmin() == 0) {
-            getMenuInflater().inflate(R.menu.activity_menu_default, menu);
+            getMenuInflater().inflate(R.menu.activity_menu_userattend, menu);
         }
         else {
             getMenuInflater().inflate(R.menu.activity_menu_content, menu);
@@ -71,6 +71,10 @@ public class GymProgramContentsActivity extends AppCompatActivity {
                 break;
             case R.id.menu_back:
                 finish();
+                break;
+            case R.id.menu_action_attend:
+                break;
+            case R.id.menu_action_cancle:
                 break;
             default:
                 break;
