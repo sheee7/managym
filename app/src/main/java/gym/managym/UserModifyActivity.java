@@ -14,7 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -63,12 +65,15 @@ public class UserModifyActivity extends AppCompatActivity {
         final Spinner trainerSpinner = findViewById(R.id.trainerSpinner);
         final CheckBox adminCheck = findViewById(R.id.modifyAdmin);
         final Button modifyAcceptButton = findViewById(R.id.modifyAcceptButton);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, trainerList);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, trainerList);
+        final RelativeLayout modifyTrainer = findViewById(R.id.modifyTrainer);
 
         if (userListData.getAdmin() != 0) {
-            adminState = true;
+            adminCheck.setChecked(true);
+            modifyTrainer.setVisibility(View.GONE);
         } else {
-            adminState = false;
+            adminCheck.setChecked(false);
+            modifyTrainer.setVisibility(View.VISIBLE);
         }
 
         userIDText.setText(userListData.getUserID());
@@ -122,8 +127,17 @@ public class UserModifyActivity extends AppCompatActivity {
             }
         });
 
-
-        adminCheck.setChecked(adminState);
+        adminCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b) {
+                    modifyTrainer.setVisibility(View.GONE);
+                }
+                else {
+                    modifyTrainer.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         modifyAcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,12 +148,16 @@ public class UserModifyActivity extends AppCompatActivity {
                 final String phone = phoneText.getText().toString();
                 final String weight = weightText.getText().toString();
                 final String height = heightText.getText().toString();
-                final String trainer = trainerList.get(trainerSpinner.getSelectedItemPosition());
+                final String trainer;
                 final String admin;
-                if (adminCheck.isChecked())
+                if (adminCheck.isChecked()) {
                     admin = "1";
-                else
+                    trainer = "";
+                }
+                else {
                     admin = "0";
+                    trainer = trainerList.get(trainerSpinner.getSelectedItemPosition());
+                }
 
                 if (name.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserModifyActivity.this);
@@ -159,7 +177,7 @@ public class UserModifyActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
-                if (trainer.equals("")) {
+                if (trainer.equals("") && admin.equals("0")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserModifyActivity.this);
                     dialog = builder.setMessage("담당 트레이너를 선택하세요.").setNegativeButton("OK", null).create();
                     dialog.show();

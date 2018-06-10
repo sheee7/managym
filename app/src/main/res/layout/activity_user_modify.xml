@@ -28,91 +28,205 @@ tools:context=".UserModifyActivity">
     android:layout_marginTop="25dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/modifyUserID"
+    <RelativeLayout
         android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    <TextView
+        android:id="@+id/IDText"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerVertical="true"
         android:text="ID"
         android:textSize="16dp"
         android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:id="@+id/modifyUserID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ID"
+        android:textSize="16dp"
+        android:layout_toRightOf="@id/IDText"
+        android:layout_marginLeft="6dp"
+        android:layout_centerVertical="true"
         android:textColor="#000000">
     </TextView>
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Name"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
     <EditText
         android:id="@+id/modifyName"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:hint="Name"
-        android:layout_gravity="center"
+        android:layout_toRightOf="@id/nameText"
+        android:layout_marginLeft="6dp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"
-        android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
         />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    <TextView
+        android:id="@+id/birthdayText"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Birthday"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
     <EditText
         android:id="@+id/modifyBirth"
         android:inputType="date"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:hint="Birthday"
-        android:layout_gravity="center"
+        android:layout_toRightOf="@id/birthdayText"
+        android:layout_marginLeft="6dp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"
-        android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
         />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Phone"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
     <EditText
         android:id="@+id/modifyPhone"
         android:inputType="phone"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:hint="Phone Number"
-        android:layout_gravity="center"
+        android:layout_toRightOf="@id/phoneText"
+        android:layout_marginLeft="6dp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"
-        android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
         />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+    <TextView
+        android:id="@+id/weightText"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Weight"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
     <EditText
         android:id="@+id/modifyWeight"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:hint="Weight"
-        android:layout_gravity="center"
+        android:layout_toRightOf="@id/weightText"
+        android:layout_marginLeft="6dp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"
-        android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
         />
-    <EditText
-        android:id="@+id/modifyHeight"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:hint="Height"
-        android:layout_gravity="center"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        />
-
-    <Spinner
-        android:id="@+id/trainerSpinner"
-        android:layout_width="280dp"
-        android:layout_height="35dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="280dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/heightText"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Height"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
+        <EditText
+            android:id="@+id/modifyHeight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/heightText"
+            android:hint="Height"
+            android:layout_marginLeft="6dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:background="@color/colorPrimary"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/modifyTrainer"
+        android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/modifyTrainerText"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Trainer"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#000000">
+        </TextView>
+
+        <Spinner
+            android:id="@+id/trainerSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/modifyTrainerText"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center">
 
         <TextView
             android:id="@+id/adminText"
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Admin"
