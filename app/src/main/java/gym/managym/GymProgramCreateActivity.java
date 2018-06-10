@@ -58,6 +58,15 @@ public class GymProgramCreateActivity extends AppCompatActivity {
             createStartTime.setText(programData.getStartTime());
             createEndTime.setText(programData.getEndTime());
             programCreateContent.setText(programData.getProgramContents());
+            String frequency = programData.getFrequency();
+            for(int i = 0; i < 7; i++) {
+                if(frequency.charAt(i) == '1') {
+                    checkBoxes[i].setChecked(true);
+                }
+                else {
+                    checkBoxes[i].setChecked(false);
+                }
+            }
             createButton.setText("Modify");
         }
 
@@ -145,7 +154,8 @@ public class GymProgramCreateActivity extends AppCompatActivity {
                     queue.add(programCreate);
                 }
                 else  {
-                    ProgramModify programModify = new ProgramModify(programName, startTime, endTime, frequency, programContents, responseListener);
+                    String programNum = String.valueOf(programData.getProgramNum());
+                    ProgramModify programModify = new ProgramModify(programNum, programName, startTime, endTime, frequency, programContents, responseListener);
                     RequestQueue queue = Volley.newRequestQueue(GymProgramCreateActivity.this);
                     queue.add(programModify);
                 }
@@ -187,7 +197,7 @@ public class GymProgramCreateActivity extends AppCompatActivity {
 }
 
 class ProgramCreate extends StringRequest {
-    final static private String URL = "http://jeffjks.cafe24.com/programCreate.php";
+    final static private String URL = "http://jeffjks.cafe24.com/ProgramCreate.php";
     private Map<String, String> parameters;
 
     public ProgramCreate(String programName, String userID, String startTime, String endTime, String frequency, String contents, Response.Listener<String> listener) {
@@ -208,12 +218,13 @@ class ProgramCreate extends StringRequest {
 }
 
 class ProgramModify extends StringRequest {
-    final static private String URL = "http://jeffjks.cafe24.com/programModify.php";
+    final static private String URL = "http://jeffjks.cafe24.com/ProgramModify.php";
     private Map<String, String> parameters;
 
-    public ProgramModify(String programName, String startTime, String endTime, String frequency, String contents, Response.Listener<String> listener) {
+    public ProgramModify(String programNum, String programName, String startTime, String endTime, String frequency, String contents, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
+        parameters.put("programNum", programNum);
         parameters.put("programName", programName);
         parameters.put("startTime", startTime);
         parameters.put("endTime", endTime);
