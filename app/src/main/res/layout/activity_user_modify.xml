@@ -225,7 +225,7 @@ tools:context=".UserModifyActivity">
         android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/adminText"
+            android:id="@+id/adminTextView"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -239,10 +239,9 @@ tools:context=".UserModifyActivity">
             android:id="@+id/modifyAdmin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/adminTextView"
             android:layout_marginLeft="6dp"
-            android:layout_toRightOf="@id/adminText"
-            android:textColor="#ffffff"
-            />
+            android:textColor="#ffffff" />
     </RelativeLayout>
 
     <LinearLayout

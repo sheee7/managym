@@ -19,6 +19,9 @@
                 />
             </intent-filter>
         </activity>
+        <activity android:name=".GymProgramActivity" />
+        <activity android:name=".GymProgramContentsActivity" />
+        <activity android:name=".GymProgramCreateActivity" />
         <activity android:name=".TrainerMainActivity" />
         <activity android:name=".TraineeMainActivity" />
         <activity android:name=".NoticeActivity" />

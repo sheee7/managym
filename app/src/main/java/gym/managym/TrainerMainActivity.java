@@ -30,7 +30,6 @@ public class TrainerMainActivity extends AppCompatActivity {
         final TextView phoneText = findViewById(R.id.phoneText);
         final TextView weightText = findViewById(R.id.weightText);
         final TextView heightText = findViewById(R.id.heightText);
-        final TextView pointText = findViewById(R.id.pointText);
         final TextView adminText = findViewById(R.id.adminText);
 
         idText.setText("ID : " + userData.getUserID());
@@ -40,11 +39,20 @@ public class TrainerMainActivity extends AppCompatActivity {
         phoneText.setText("Phone : " + userData.getPhone());
         weightText.setText("Weight : " + userData.getWeight());
         heightText.setText("Height : " + userData.getHeight());
-        pointText.setText("Point : " + userData.getPoint());
         adminText.setText("Admin : " + userData.getAdmin());
 
+        final Button gymProgramButton = findViewById(R.id.gymProgramButton);
         final Button noticeButton = findViewById(R.id.noticeButton);
         final Button userManagementButton = findViewById(R.id.userManagementButton);
+
+        gymProgramButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TrainerMainActivity.this, GymProgramActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

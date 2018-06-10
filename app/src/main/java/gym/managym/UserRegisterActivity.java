@@ -172,7 +172,7 @@ public class UserRegisterActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
-
+                
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
