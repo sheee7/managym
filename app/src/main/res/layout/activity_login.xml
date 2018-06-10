@@ -13,18 +13,14 @@
 
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="125dp"
-            android:layout_gravity="center"
-            android:layout_margin="80dp"
-            />
-        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@android:dimen/notification_large_icon_width"
             android:layout_gravity="center"
-            android:text="ManaGYM"
-            android:textSize="18dp" />
-
+            android:layout_marginBottom="80dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/img_title" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -71,6 +67,20 @@
                     android:background="@drawable/img_enter"
                     />
                 />
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="version.demo"
+                        android:textSize="18dp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

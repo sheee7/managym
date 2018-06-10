@@ -45,6 +45,7 @@ public class TrainerMainActivity extends AppCompatActivity {
 
         final Button noticeButton = findViewById(R.id.noticeButton);
         final Button userManagementButton = findViewById(R.id.userManagementButton);
+        final Button messengerButton = findViewById(R.id.messengerButton);
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -57,6 +58,14 @@ public class TrainerMainActivity extends AppCompatActivity {
         userManagementButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(TrainerMainActivity.this, UserManagementActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        messengerButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(TrainerMainActivity.this, MessengerActivity.class);
+                intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         });

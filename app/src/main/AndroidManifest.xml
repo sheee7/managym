@@ -28,6 +28,8 @@
         <activity android:name=".UserRegisterActivity" />
         <activity android:name=".UserContentActivity" />
         <activity android:name=".UserModifyActivity" />
+        <activity android:name=".MessengerActivity" />
+        <activity android:name=".MessengerWriteActivity"></activity>
     </application>
 
 </manifest>

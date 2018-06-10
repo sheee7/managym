@@ -163,7 +163,7 @@
                 android:text="GYM Program"
                 android:layout_gravity="end"/>
             <Button
-                android:id="@+id/MessengerButton"
+                android:id="@+id/messengerButton"
                 android:layout_width="80dp"
                 android:layout_height="90dp"
                 android:text="Messenger"
