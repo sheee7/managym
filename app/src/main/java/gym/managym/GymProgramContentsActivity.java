@@ -54,7 +54,7 @@ public class GymProgramContentsActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.activity_menu_default, menu);
         }
         else {
-            getMenuInflater().inflate(R.menu.activity_menu_default, menu);
+            getMenuInflater().inflate(R.menu.activity_menu_content, menu);
         }
         return true;
     }
@@ -82,7 +82,7 @@ public class GymProgramContentsActivity extends AppCompatActivity {
         Intent intent = new Intent(GymProgramContentsActivity.this, GymProgramCreateActivity.class);
         intent.putExtra("programData", programData);
         intent.putExtra("userData", userData);
-        intent.putExtra("", false);
+        intent.putExtra("create", false);
         startActivity(intent);
         finish();
     }
@@ -192,7 +192,6 @@ class GymProgramData implements Parcelable {
     }
 
     public String changeFrequencyToDay() {
-        System.out.println(frequency);
         String result = "";
         for(int i = 0; i < 7; i++) {
             if(frequency.charAt(i) == '1') {
@@ -224,7 +223,6 @@ class GymProgramData implements Parcelable {
                 }
             }
         }
-        System.out.println(result);
         return result;
     }
 

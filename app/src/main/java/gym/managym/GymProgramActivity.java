@@ -68,12 +68,15 @@ public class GymProgramActivity extends AppCompatActivity {
         programListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // Read Notice
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) { // Read Notice
+                int num = programList.get(position).getNum();
                 String name = programList.get(position).getName();
                 String ID = programList.get(position).getID();
-                String period = programList.get(position).getPeriod();
+                String startTime = programList.get(position).getStartTime();
+                String endTime = programList.get(position).getEndTime();
+                String frequency = programList.get(position).getFrequency();
                 String contents = programList.get(position).getContents();
 
-                GymProgramData programData = new GymProgramData(); // parcelable
+                GymProgramData programData = new GymProgramData(num, name, contents,  ID, startTime, endTime, frequency); // parcelable
                 Intent intent = new Intent(GymProgramActivity.this, GymProgramContentsActivity.class);
                 intent.putExtra("userData", userData);
                 intent.putExtra("programData", programData);
@@ -144,14 +147,19 @@ public class GymProgramActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
-                String programName, trainerID, programPeriod, programContents;
+                int programNum;
+                String programName, trainerID, startTime, endTime, programFrequency, programPeriod, programContents;
                 while(count < jsonArray.length()) {
                     JSONObject object = jsonArray.getJSONObject(count);
+                    programNum = object.getInt("programNum");
                     programName = object.getString("prgramName");
                     trainerID = object.getString("trainerID");
+                    startTime = object.getString("startTime");
+                    endTime = object.getString("finishTime");
+                    programFrequency = object.getString("frequency");
                     programPeriod = object.getString("startTime") + "~" + object.getString("finishTime") + "(" + changeFrequencyToDay(object.getString("frequency")) + ")";
                     programContents = object.getString("contents");
-                    GymProgramListView program = new GymProgramListView(programName, trainerID, programPeriod, programContents);
+                    GymProgramListView program = new GymProgramListView(programNum, programName, trainerID, startTime, endTime, programFrequency, programPeriod, programContents);
                     programList.add(program);
                     adapter.notifyDataSetChanged();
                     count++;
@@ -163,7 +171,6 @@ public class GymProgramActivity extends AppCompatActivity {
         }
 
         public String changeFrequencyToDay(String frequency) {
-            System.out.println(frequency);
             String result = "";
             for(int i = 0; i < 7; i++) {
                 if(frequency.charAt(i) == '1') {
@@ -195,23 +202,34 @@ public class GymProgramActivity extends AppCompatActivity {
                     }
                 }
             }
-            System.out.println(result);
             return result;
         }
     }
 }
 
 class GymProgramListView {
+    int num;
     String name;
     String ID;
+    String startTime;
+    String endTime;
+    String frequency;
     String period;
     String contents;
 
-    public GymProgramListView(String name, String ID, String period, String contents) {
+    public GymProgramListView(int num, String name, String ID, String startTime, String endTime, String frequency, String period, String contents) {
+        this.num = num;
         this.name = name;
         this.ID = ID;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.frequency = frequency;
         this.period = period;
         this.contents = contents;
+    }
+
+    public int getNum() {
+        return num;
     }
 
     public String getName() {
@@ -228,6 +246,30 @@ class GymProgramListView {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 
     public String getPeriod() {
