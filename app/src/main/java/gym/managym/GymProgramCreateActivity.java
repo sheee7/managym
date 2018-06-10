@@ -204,9 +204,9 @@ class ProgramCreate extends StringRequest {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
         parameters.put("programName", programName);
-        parameters.put("userID", userID);
+        parameters.put("trainerID", userID);
         parameters.put("startTime", startTime);
-        parameters.put("endTime", endTime);
+        parameters.put("finishTime", endTime);
         parameters.put("frequency", frequency);
         parameters.put("contents", contents);
     }

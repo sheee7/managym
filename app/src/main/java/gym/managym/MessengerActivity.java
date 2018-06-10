@@ -93,7 +93,7 @@ public class MessengerActivity extends AppCompatActivity {
                     textEmpty.setVisibility(View.VISIBLE);
             }
         };
-        MessengerReceive messengerReceive = new MessengerReceive("MESENGER_"+userData.getUserID(), responseListener);
+        MessengerReceive messengerReceive = new MessengerReceive("MESSENGER_"+userData.getUserID(), responseListener);
         RequestQueue queue = Volley.newRequestQueue(MessengerActivity.this);
         queue.add(messengerReceive);
 

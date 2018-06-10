@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,6 @@ public class MessengerWriteActivity extends AppCompatActivity {
     private Bundle bundle;
     private UserData userData;
     private AlertDialog dialog;
-    private boolean success = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,12 @@ public class MessengerWriteActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
+                else if (recipient.equals(userID)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MessengerWriteActivity.this);
+                    dialog = builder.setMessage("자신에게는 메시지를 보낼 수 없습니다.").setNegativeButton("OK", null).create();
+                    dialog.show();
+                    return;
+                }
                 else if (content.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MessengerWriteActivity.this);
                     dialog = builder.setMessage("내용을 입력하세요.").setNegativeButton("OK", null).create();
@@ -63,62 +69,91 @@ public class MessengerWriteActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
+                else {
+                    Response.Listener<String> responseListenerA = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
 
-                Response.Listener<String> responseListenerA = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            success = jsonResponse.getBoolean("success");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                ValidateRequest validateRequest = new ValidateRequest(userID, responseListenerA);
-                RequestQueue queueA = Volley.newRequestQueue(MessengerWriteActivity.this);
-                queueA.add(validateRequest);
-
-                if (success) { // 존재하면 success = false, 없으면 true
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MessengerWriteActivity.this);
-                    dialog = builder.setMessage("존재하지 않는 아이디입니다.").setNegativeButton("OK", null).create();
-                    dialog.show();
-                    return;
-                }
-
-                Response.Listener<String> responseListenerB = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MessengerWriteActivity.this);
-                                builder.setMessage("메시지를 전송하였습니다.");
-                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        finish();
-                                    }
-                                });
-                                builder.create();
-                                builder.show();
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MessengerWriteActivity.this);
-                                dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
-                                dialog.show();
+                                Log.d("Tag", String.valueOf(success));
+                                if (success) { // 존재하면 success = false, 없으면 true
+                                    Log.d("Tag", "not exists");
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MessengerWriteActivity.this);
+                                    dialog = builder.setMessage("존재하지 않는 아이디입니다.").setNegativeButton("OK", null).create();
+                                    dialog.show();
+                                    return;
+                                }
+                                else {
+                                    Log.d("Tag", "exists. send message.");
+                                    sendMessage(userID, recipient, content);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
-                    }
-                };
-                MessengerSend messengerSend = new MessengerSend(userID, "MESENGER_"+recipient, content, responseListenerB);
-                RequestQueue queueB = Volley.newRequestQueue(MessengerWriteActivity.this);
-                queueB.add(messengerSend);
+                    };
+                    ValidateRequest validateRequest = new ValidateRequest(recipient, responseListenerA);
+                    RequestQueue queueA = Volley.newRequestQueue(MessengerWriteActivity.this);
+                    queueA.add(validateRequest);
+                }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) { // Action Bar Setting
+        getMenuInflater().inflate(R.menu.activity_menu_default, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch(id){
+            case R.id.menu_back:
+                finish();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void sendMessage(String userID, String recipient, String content) {
+        Response.Listener<String> responseListenerB = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MessengerWriteActivity.this);
+                        builder.setMessage("메시지를 전송하였습니다.");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                        builder.create();
+                        builder.show();
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MessengerWriteActivity.this);
+                        dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
+                        dialog.show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        MessengerSend messengerSend = new MessengerSend(userID, "MESSENGER_" + recipient, content, responseListenerB);
+        RequestQueue queueB = Volley.newRequestQueue(MessengerWriteActivity.this);
+        queueB.add(messengerSend);
     }
 }
 
