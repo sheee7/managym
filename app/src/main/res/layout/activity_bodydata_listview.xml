@@ -11,17 +11,6 @@
         android:background="#ffffff"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/userIDText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:padding="10dp"
-            android:text="신체정보 "
-            android:textColor="#ffffff"
-            android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

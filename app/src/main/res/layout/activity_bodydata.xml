@@ -35,6 +35,17 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/listEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="80dp"
+            android:layout_marginTop="80dp"
+            android:text="저장된 신체정보가 없습니다."
+            android:textColor="#052e43"
+            android:textSize="20dp" />
+
         <ListView
             android:id="@+id/bodyDataListView"
             android:layout_width="match_parent"
