@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.mikephil.charting.charts.LineChart;
 
 import org.json.JSONObject;
 
@@ -31,7 +32,7 @@ public class BodyDataContentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice_content);
+        setContentView(R.layout.activity_bodydata);
 
         final TextView userIDText = findViewById(R.id.userIDText);
         final TextView heightText = findViewById(R.id.heightText);
@@ -41,12 +42,15 @@ public class BodyDataContentActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
-        bodyData = bundle.getParcelable("noticeData");
         userIDText.setText(bodyData.getUserID());
         heightText.setText(String.valueOf(bodyData.getHeight()));
         weightText.setText(String.valueOf(bodyData.getWeight()));
         recordDateText.setText(bodyData.getDate());
         bmiText.setText(String.valueOf(bodyData.getBmi()));
+
+
+
+
     }
 
     @Override
@@ -80,7 +84,6 @@ public class BodyDataContentActivity extends AppCompatActivity {
 
     private void modifyBodyData() { // Modify Notice
         Intent intent = new Intent(BodyDataContentActivity.this, BodyDataWriteActivity.class);
-        intent.putExtra("noticeData", bodyData);
         intent.putExtra("userData", userData);
         intent.putExtra("write", false);
         startActivity(intent);

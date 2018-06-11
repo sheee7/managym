@@ -151,7 +151,7 @@ public class MessengerWriteActivity extends AppCompatActivity {
                 }
             }
         };
-        MessengerSend messengerSend = new MessengerSend(userID, "MESSENGER_" + recipient, content, responseListenerB);
+        MessengerSend messengerSend = new MessengerSend(userID, recipient, content, responseListenerB);
         RequestQueue queueB = Volley.newRequestQueue(MessengerWriteActivity.this);
         queueB.add(messengerSend);
     }
@@ -165,7 +165,7 @@ class MessengerSend extends StringRequest {
         super(Method.POST, URL, listener, null); // 해당 정보를 POST 방식으로 URL에 전송
         parameters = new HashMap<>();
         parameters.put("sender", userID);
-        parameters.put("recipient", recipient);
+        parameters.put("recipient", "MESSENGER_"+recipient);
         parameters.put("content", content);
     }
 
