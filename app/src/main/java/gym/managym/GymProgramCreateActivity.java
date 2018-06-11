@@ -232,6 +232,7 @@ class ProgramModify extends StringRequest {
         parameters.put("finishTime", finishTime);
         parameters.put("frequency", frequency);
         parameters.put("contents", contents);
+        Log.d("TAG", contents);
     }
 
     @Override
