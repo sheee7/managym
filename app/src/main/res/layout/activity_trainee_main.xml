@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_trainee_main"
     android:layout_width="match_parent"
@@ -12,89 +12,33 @@
     android:orientation="vertical"
     tools:context=".TraineeMainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/idText"
-        android:text="ID"
-        android:textSize="18sp"
-        android:textColor="#052e43"/>
+        android:layout_alignParentTop="true">
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="welcome"
+            android:textSize="16sp"
+            android:textColor="#052e43"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pwText"
-        android:text="PW"
-        android:textSize="18sp"
-        android:textColor="#052e43"/>
-
-    <TextView
-        android:id="@+id/nameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="info1"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/birthText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="info2"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/phoneText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="phone"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/weightText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="weight"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/heightText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="height"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/pointText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="point"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/adminText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="admin"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/trainerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="trainer"
-        android:textColor="#052e43"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/trainerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="trainer"
+            android:textColor="#052e43"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center">
 
         <LinearLayout
@@ -108,67 +52,84 @@
                 android:layout_width="160dp"
                 android:layout_height="60dp"
                 android:text="Attend GYM"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start" />
 
             <LinearLayout
                 android:layout_width="160dp"
                 android:layout_height="90dp"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/workoutDataButton"
                     android:layout_width="80dp"
                     android:layout_height="90dp"
-                    android:text="Workout Data"
-                    android:layout_gravity="start"/>
+                    android:layout_gravity="start"
+                    android:text="Workout Data" />
+
                 <Button
                     android:id="@+id/bodyDataButton"
                     android:layout_width="80dp"
                     android:layout_height="90dp"
-                    android:text="Body Data"
-                    android:layout_gravity="end"/>
+                    android:layout_gravity="end"
+                    android:text="Body Data" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/pointRecordButton"
                 android:layout_width="160dp"
                 android:layout_height="60dp"
-                android:text="Point Record"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start"
+                android:text="Point Record" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/layer1"
-            android:layout_marginLeft="10dp">
+            android:orientation="vertical">
+
             <Button
                 android:id="@+id/noticeButton"
                 android:layout_width="160dp"
                 android:layout_height="120dp"
-                android:text="Notice"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end"
+                android:text="Notice" />
+
             <LinearLayout
                 android:layout_width="160dp"
                 android:layout_height="90dp"
-                android:orientation="horizontal"
-                android:layout_gravity="end">
-            <Button
-                android:id="@+id/gymProgramButton"
-                android:layout_width="80dp"
-                android:layout_height="90dp"
-                android:text="GYM Program"
-                android:layout_gravity="end"/>
-            <Button
-                android:id="@+id/messengerButton"
-                android:layout_width="80dp"
-                android:layout_height="90dp"
-                android:text="Messenger"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/gymProgramButton"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="end"
+                    android:text="GYM Program" />
+
+                <Button
+                    android:id="@+id/messengerButton"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="end"
+                    android:text="Messenger" />
             </LinearLayout>
 
         </LinearLayout>
 
     </RelativeLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/pointText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="point"
+        android:textColor="#052e43"
+        android:textSize="18sp" />
+
+</RelativeLayout>
