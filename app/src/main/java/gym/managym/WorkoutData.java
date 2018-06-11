@@ -7,8 +7,7 @@ class WorkoutData implements Parcelable {
     private String workoutName;
     private int time;
     private int strength;
-    private int number;
-    private int date;
+    private String date;
 
     public WorkoutData() { }
 
@@ -16,11 +15,10 @@ class WorkoutData implements Parcelable {
         readFromParcel(in);
     }
 
-    public WorkoutData(String workoutName, int time, int strength, int number, int date) {
+    public WorkoutData(String workoutName, int time, int strength, String date) {
         this.workoutName = workoutName;
         this.time = time;
         this.strength = strength;
-        this.number = number;
         this.date = date;
     }
 
@@ -50,11 +48,7 @@ class WorkoutData implements Parcelable {
         return this.strength;
     }
 
-    public int getNumber() {
-        return this.number;
-    }
-
-    public int getDate() {
+    public String getDate() {
         return this.date;
     }
 
@@ -62,15 +56,13 @@ class WorkoutData implements Parcelable {
         dest.writeString(this.workoutName);
         dest.writeInt(this.time);
         dest.writeInt(this.strength);
-        dest.writeInt(this.number);
-        dest.writeInt(this.date);
+        dest.writeString(this.date);
     }
 
     private void readFromParcel(Parcel in) {
         this.workoutName = in.readString();
         this.time = in.readInt();
         this.strength = in.readInt();
-        this.number = in.readInt();
-        this.date = in.readInt();
+        this.date = in.readString();
     }
 }
