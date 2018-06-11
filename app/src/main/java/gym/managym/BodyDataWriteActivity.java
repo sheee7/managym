@@ -35,8 +35,8 @@ public class BodyDataWriteActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
         write = getIntent().getBooleanExtra("write", true);
-        final EditText bodyDataWriteHeight = findViewById(R.id.bodydataWriteHeigt);
-        final EditText bodyDataWriteWeight = findViewById(R.id.bodydataWriteWeigt);
+        final EditText bodyDataWriteHeight = findViewById(R.id.bodyDataWriteHeight);
+        final EditText bodyDataWriteWeight = findViewById(R.id.bodyDataWriteWeight);
         final Button postButton = findViewById(R.id.postButton);
 
         postButton.setOnClickListener(new View.OnClickListener() {
