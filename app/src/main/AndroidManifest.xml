@@ -18,6 +18,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity android:name=".AttendGymActivity" />
         <activity android:name=".GymProgramActivity" />
         <activity android:name=".GymProgramContentsActivity" />
         <activity android:name=".GymProgramCreateActivity" />
@@ -34,6 +35,7 @@
         <activity android:name=".BodyDataWriteActivity" />
         <activity android:name=".MessengerActivity" />
         <activity android:name=".MessengerWriteActivity"/>
+        <activity android:name=".WorkoutDataActivity" />
     </application>
 
 </manifest>
