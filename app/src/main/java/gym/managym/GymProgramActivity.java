@@ -80,6 +80,7 @@ public class GymProgramActivity extends AppCompatActivity {
                     Log.d("TAG", "lengths: "+String.valueOf(jsonArray.length()));
                     while(count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
+                        //Log.d("TAG", object.getString("success"));
                         myProgramNum.add(object.getInt("programNum"));
                         Log.d("TAG", String.valueOf(myProgramNum.get(count)));
                         adapter.notifyDataSetChanged();
@@ -93,6 +94,8 @@ public class GymProgramActivity extends AppCompatActivity {
         MyProgramSearch myProgramSearch = new MyProgramSearch(userData.getUserID(), responseListener);
         RequestQueue queue = Volley.newRequestQueue(GymProgramActivity.this);
         queue.add(myProgramSearch);
+
+        new BackgroundTask().execute();
 
         createButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { // Write Notice
@@ -284,7 +287,6 @@ public class GymProgramActivity extends AppCompatActivity {
             super(Method.POST, URL, listener, null);
             parameters = new HashMap<>();
             parameters.put("userID", userID);
-            Log.d("TAG", userID);
         }
     }
 }
