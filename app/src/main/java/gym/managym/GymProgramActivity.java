@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +43,7 @@ public class GymProgramActivity extends AppCompatActivity {
     private GymProgramListAdapter myAdapter;
     private ArrayList<GymProgramListView> programList;
     private ArrayList<GymProgramListView> myProgramList;
-    private ArrayList<Integer> myProgramNum;
+    private ArrayList<Integer> myProgramNum = new ArrayList<>();
     private Bundle bundle;
     private UserData userData;
     public static Activity gymProgramActivity;
@@ -76,9 +77,11 @@ public class GymProgramActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("response");
                     int count = 0;
-                    while (count < jsonArray.length()) {
+                    Log.d("TAG", "lengths: "+String.valueOf(jsonArray.length()));
+                    while(count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
                         myProgramNum.add(object.getInt("programNum"));
+                        Log.d("TAG", String.valueOf(myProgramNum.get(count)));
                         adapter.notifyDataSetChanged();
                         count++;
                     }
@@ -90,8 +93,6 @@ public class GymProgramActivity extends AppCompatActivity {
         MyProgramSearch myProgramSearch = new MyProgramSearch(userData.getUserID(), responseListener);
         RequestQueue queue = Volley.newRequestQueue(GymProgramActivity.this);
         queue.add(myProgramSearch);
-
-        new GymProgramActivity.BackgroundTask().execute();
 
         createButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { // Write Notice
@@ -283,6 +284,7 @@ public class GymProgramActivity extends AppCompatActivity {
             super(Method.POST, URL, listener, null);
             parameters = new HashMap<>();
             parameters.put("userID", userID);
+            Log.d("TAG", userID);
         }
     }
 }
