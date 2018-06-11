@@ -93,7 +93,7 @@ public class MessengerActivity extends AppCompatActivity {
                     textEmpty.setVisibility(View.VISIBLE);
             }
         };
-        MessengerReceive messengerReceive = new MessengerReceive("MESSENGER_"+userData.getUserID(), responseListener);
+        MessengerReceive messengerReceive = new MessengerReceive(userData.getUserID(), responseListener);
         RequestQueue queue = Volley.newRequestQueue(MessengerActivity.this);
         queue.add(messengerReceive);
 
@@ -208,7 +208,7 @@ class MessengerReceive extends StringRequest {
     public MessengerReceive(String recipient, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
-        parameters.put("recipient", recipient);
+        parameters.put("recipient", "MESSENGER_"+recipient);
     }
 
     @Override

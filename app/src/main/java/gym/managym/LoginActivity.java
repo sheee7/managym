@@ -106,6 +106,7 @@ class LoginRequest extends StringRequest {
         parameters = new HashMap<>();
         parameters.put("userID", userID);
         parameters.put("userPW", userPW);
+        parameters.put("table", "BODYDATA_"+userID);
     }
 
     @Override
