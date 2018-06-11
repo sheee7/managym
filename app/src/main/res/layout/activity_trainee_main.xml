@@ -51,8 +51,8 @@
                 android:id="@+id/attendButton"
                 android:layout_width="160dp"
                 android:layout_height="60dp"
-                android:layout_gravity="start"
-                android:text="Attend GYM" />
+                android:text="Attend GYM"
+                android:layout_gravity="start" />
 
             <LinearLayout
                 android:layout_width="160dp"

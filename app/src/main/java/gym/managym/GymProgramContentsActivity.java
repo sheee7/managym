@@ -26,6 +26,7 @@ public class GymProgramContentsActivity extends AppCompatActivity {
     private Bundle bundle;
     private UserData userData;
     private GymProgramData programData;
+    private boolean myProgram;
     private AlertDialog dialog;
     private GymProgramActivity programActivity = (GymProgramActivity)GymProgramActivity.gymProgramActivity;
 
@@ -42,6 +43,8 @@ public class GymProgramContentsActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
         programData = bundle.getParcelable("programData");
+        myProgram = bundle.getParcelable("myProgram");
+
 
         programName.setText(programData.getProgramName());
         trainerID.setText(programData.getTrainerID());

@@ -16,21 +16,33 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GymProgramActivity extends AppCompatActivity {
     private ListView programListView;
+    private ListView myProgramListView;
     private GymProgramListAdapter adapter;
+    private GymProgramListAdapter myAdapter;
     private ArrayList<GymProgramListView> programList;
+    private ArrayList<GymProgramListView> myProgramList;
+    private ArrayList<Integer> myProgramNum;
     private Bundle bundle;
     private UserData userData;
     public static Activity gymProgramActivity;
@@ -39,17 +51,45 @@ public class GymProgramActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gymprogram);
+
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
         gymProgramActivity = GymProgramActivity.this;
 
         final Button createButton = findViewById(R.id.createButton);
+        final TextView myProgramListText = findViewById(R.id.myGymProgramText);
 
         programListView = findViewById(R.id.programListView);
         programList = new ArrayList<>();
+        myProgramListView = findViewById(R.id.myProgramListView);
+        myProgramList = new ArrayList<>();
 
         adapter = new GymProgramListAdapter(getApplicationContext(), programList);
         programListView.setAdapter(adapter);
+        myAdapter = new GymProgramListAdapter(getApplicationContext(), myProgramList);
+        myProgramListView.setAdapter(myAdapter);
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("response");
+                    int count = 0;
+                    while (count < jsonArray.length()) {
+                        JSONObject object = jsonArray.getJSONObject(count);
+                        myProgramNum.add(object.getInt("programNum"));
+                        adapter.notifyDataSetChanged();
+                        count++;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        MyProgramSearch myProgramSearch = new MyProgramSearch(userData.getUserID(), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(GymProgramActivity.this);
+        queue.add(myProgramSearch);
 
         new GymProgramActivity.BackgroundTask().execute();
 
@@ -64,6 +104,10 @@ public class GymProgramActivity extends AppCompatActivity {
         });
         if (userData.getAdmin() == 0)
             createButton.setVisibility(View.GONE);
+        else {
+            myProgramListText.setVisibility(View.GONE);
+            myProgramListView.setVisibility(View.GONE);
+        }
 
         programListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // Read Notice
             @Override
@@ -80,6 +124,27 @@ public class GymProgramActivity extends AppCompatActivity {
                 Intent intent = new Intent(GymProgramActivity.this, GymProgramContentsActivity.class);
                 intent.putExtra("userData", userData);
                 intent.putExtra("programData", programData);
+                intent.putExtra("myProgram", false);
+                startActivity(intent);
+            }
+        });
+
+        myProgramListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int num = myProgramList.get(i).getNum();
+                String name = myProgramList.get(i).getName();
+                String ID = myProgramList.get(i).getID();
+                String startTime = myProgramList.get(i).getStartTime();
+                String endTime = myProgramList.get(i).getEndTime();
+                String frequency = myProgramList.get(i).getFrequency();
+                String contents = myProgramList.get(i).getContents();
+
+                GymProgramData programData = new GymProgramData(num, name, contents, ID, startTime, endTime, frequency);
+                Intent intent = new Intent(GymProgramActivity.this, GymProgramContentsActivity.class);
+                intent.putExtra("userData", userData);
+                intent.putExtra("programData", programData);
+                intent.putExtra("myProgram", true);
                 startActivity(intent);
             }
         });
@@ -160,7 +225,11 @@ public class GymProgramActivity extends AppCompatActivity {
                     programPeriod = object.getString("startTime") + "~" + object.getString("finishTime") + "(" + changeFrequencyToDay(object.getString("frequency")) + ")";
                     programContents = object.getString("contents");
                     GymProgramListView program = new GymProgramListView(programNum, programName, trainerID, startTime, endTime, programFrequency, programPeriod, programContents);
-                    programList.add(program);
+                    if(myProgramNum.contains(programNum)) {
+                        myProgramList.add(program);
+                    } else {
+                        programList.add(program);
+                    }
                     adapter.notifyDataSetChanged();
                     count++;
                 }
@@ -203,6 +272,17 @@ public class GymProgramActivity extends AppCompatActivity {
                 }
             }
             return result;
+        }
+    }
+
+    class MyProgramSearch extends StringRequest {
+        final static private String URL = "http://jeffjks.cafe24.com/SearchMyProgram.php/";
+        private Map<String, String> parameters;
+
+        public MyProgramSearch(String userID, Response.Listener<String> listener) {
+            super(Method.POST, URL, listener, null);
+            parameters = new HashMap<>();
+            parameters.put("userID", userID);
         }
     }
 }
