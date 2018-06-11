@@ -54,6 +54,10 @@ public class BodyDataActivity extends AppCompatActivity {
     private Bundle bundle;
     private UserData userData;
     public static Activity bodyDataActivity;
+    ArrayList<Entry> entriesHeight;
+    ArrayList<Entry> entriesWeight;
+    ArrayList<Entry> entriesBMI;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +71,9 @@ public class BodyDataActivity extends AppCompatActivity {
         final LineChart lineChartWeight = findViewById(R.id.chartWeight);
         //final LineChart lineChartHeight = findViewById(R.id.chartHeight);
         final LineChart lineChartBMI = findViewById(R.id.chartBMI);
-        final ArrayList<Entry> entriesHeight = new ArrayList<>();
-        final ArrayList<Entry> entriesWeight = new ArrayList<>();
-        final ArrayList<Entry> entriesBMI = new ArrayList<>();
+        entriesHeight = new ArrayList<>();
+        entriesWeight = new ArrayList<>();
+        entriesBMI = new ArrayList<>();
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
