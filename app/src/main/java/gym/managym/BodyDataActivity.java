@@ -65,6 +65,8 @@ public class BodyDataActivity extends AppCompatActivity {
 
         final Button writeButton = findViewById(R.id.writeButton);
         final LineChart lineChartWeight = findViewById(R.id.chartWeight);
+        //final LineChart lineChartHeight = findViewById(R.id.chartHeight);
+        final LineChart lineChartBMI = findViewById(R.id.chartBMI);
         final ArrayList<Entry> entriesHeight = new ArrayList<>();
         final ArrayList<Entry> entriesWeight = new ArrayList<>();
         final ArrayList<Entry> entriesBMI = new ArrayList<>();
@@ -90,7 +92,9 @@ public class BodyDataActivity extends AppCompatActivity {
                         entriesBMI.add(new Entry(count+1, BMI));
                         count++;
                     }
-                    drawChart(entriesWeight, lineChartWeight);
+                    drawChart(entriesWeight, lineChartWeight, "Weight");
+                    //drawChart(entriesHeight, lineChartHeight, "Height");
+                    drawChart(entriesBMI, lineChartBMI, "BMI");
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -105,15 +109,14 @@ public class BodyDataActivity extends AppCompatActivity {
             public void onClick(View v) { // Write BodyData
                 Intent intent = new Intent(BodyDataActivity.this, BodyDataWriteActivity.class);
                 intent.putExtra("userData", userData);
-                intent.putExtra("write", true);
                 startActivity(intent);
                 finish();
             }
         });
     }
 
-    private void drawChart(ArrayList<Entry> entriesWeight, LineChart lineChartWeight) {
-        LineDataSet lineDataSet = new LineDataSet(entriesWeight, "Weight");
+    private void drawChart(ArrayList<Entry> entriesWeight, LineChart lineChartWeight, String dsc) {
+        LineDataSet lineDataSet = new LineDataSet(entriesWeight, dsc);
         lineDataSet.setLineWidth(2);
         lineDataSet.setCircleRadius(6);
         lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
@@ -142,7 +145,7 @@ public class BodyDataActivity extends AppCompatActivity {
         yRAxis.setDrawGridLines(false);
 
         Description description = new Description();
-        description.setText("");
+        description.setText(dsc);
 
 
         lineChartWeight.setDoubleTapToZoomEnabled(false);

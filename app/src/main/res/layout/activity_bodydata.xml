@@ -34,31 +34,17 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chartWeight"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="240dp" />
 
-
-        <TextView
-            android:id="@+id/listEmpty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="80dp"
-            android:layout_marginTop="80dp"
-            android:text="저장된 신체정보가 없습니다."
-            android:textColor="#052e43"
-            android:textSize="20dp" />
-
-        <ListView
-            android:id="@+id/bodyDataListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:divider="#ffffff"
-            android:dividerHeight="5dp"></ListView>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartWeight"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="170dp" />
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartBMI"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="170dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

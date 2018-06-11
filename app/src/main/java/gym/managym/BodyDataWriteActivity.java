@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +25,6 @@ import java.util.Map;
 public class BodyDataWriteActivity extends AppCompatActivity {
     private Bundle bundle;
     private UserData userData;
-    private boolean write;
     private AlertDialog dialog;
 
     @Override
@@ -34,18 +34,17 @@ public class BodyDataWriteActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
-        write = getIntent().getBooleanExtra("write", true);
         final EditText bodyDataWriteHeight = findViewById(R.id.bodyDataWriteHeight);
         final EditText bodyDataWriteWeight = findViewById(R.id.bodyDataWriteWeight);
-        final Button postButton = findViewById(R.id.postButton);
+        final Button addButton = findViewById(R.id.postButton);
 
-        postButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String userID = userData.getUserID();
-                final int height = bodyDataWriteHeight.getHeight();
-                final int weight = bodyDataWriteWeight.getHeight();
-                final double bmi = weight / (height * height);
+                final String height = bodyDataWriteHeight.getText().toString();
+                final String weight = bodyDataWriteWeight.getText().toString();
+                final double BMI = Integer.parseInt(weight) * 10000 / (Integer.parseInt(height)*Integer.parseInt(height));
 
                 if (bodyDataWriteHeight.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(BodyDataWriteActivity.this);
@@ -82,6 +81,9 @@ public class BodyDataWriteActivity extends AppCompatActivity {
                                     });
                                     builder.create();
                                     builder.show();
+
+                                    String date = jsonResponse.getString("recordDate");
+                                    Log.d("TAG", date);
                                 } else {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(BodyDataWriteActivity.this);
                                     dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
@@ -92,12 +94,9 @@ public class BodyDataWriteActivity extends AppCompatActivity {
                             }
                         }
                     };
-
-                    if (write) {
-                        BodyDataPost bodyDataPost = new BodyDataPost(height, weight, "BodyData_" + userID, bmi, responseListenerB);
-                        RequestQueue queue = Volley.newRequestQueue(BodyDataWriteActivity.this);
-                        queue.add(bodyDataPost);
-                    }
+                    BodyDataAdd bodyDataAdd = new BodyDataAdd(height, weight, userID, BMI, responseListenerB);
+                    RequestQueue queue = Volley.newRequestQueue(BodyDataWriteActivity.this);
+                    queue.add(bodyDataAdd);
                 }
             }
         });
@@ -123,17 +122,21 @@ public class BodyDataWriteActivity extends AppCompatActivity {
     }
 }
 
-    class BodyDataPost extends StringRequest {
-        final static private String URL = "http://jeffjks.cafe24.com/BodyDataPost.php";
+    class BodyDataAdd extends StringRequest {
+        final static private String URL = "http://jeffjks.cafe24.com/BodyDataAdd.php";
         private Map<String, String> parameters;
 
-        public BodyDataPost(int height, int weight, String userID, double bmi, Response.Listener<String> listener) {
+        public BodyDataAdd(String height, String weight, String userID, double BMI, Response.Listener<String> listener) {
             super(Method.POST, URL, listener, null);
             parameters = new HashMap<>();
-            parameters.put("userID", userID);
-            parameters.put("height", String.valueOf(height));
-            parameters.put("weight", String.valueOf(weight));
-            parameters.put("bmi", String.valueOf(bmi));
+            parameters.put("table", "BODYDATA_"+userID);
+            parameters.put("height", height);
+            parameters.put("weight", weight);
+            parameters.put("BMI", String.valueOf(BMI));
+            Log.d("TAG", "BODYDATA_"+userID);
+            Log.d("TAG", height);
+            Log.d("TAG", weight);
+            Log.d("TAG", String.valueOf(BMI));
         }
 
         @Override
