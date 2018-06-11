@@ -45,6 +45,8 @@ public class UserModifyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_modify);
 
+        //new UserModifyActivity.BackgroundTask().execute();
+
         bundle = getIntent().getExtras();
         userListData = bundle.getParcelable("userListData");
         final TextView userIDText = findViewById(R.id.modifyUserID);
