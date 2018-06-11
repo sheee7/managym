@@ -27,3 +27,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.volley:volley:1.0.0'
 }
+
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    implementation 'com.github.PhilJay:MpAndroidChart:v3.0.2'
+}

@@ -36,32 +36,19 @@ public class TraineeMainActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
 
-        final TextView idText = findViewById(R.id.idText);
-        final TextView pwText = findViewById(R.id.pwText);
-        final TextView nameText = findViewById(R.id.nameText);
-        final TextView birthText = findViewById(R.id.birthText);
-        final TextView phoneText = findViewById(R.id.phoneText);
-        final TextView weightText = findViewById(R.id.weightText);
-        final TextView heightText = findViewById(R.id.heightText);
+        final TextView welcomeText = findViewById(R.id.welcomeText);
         final TextView pointText = findViewById(R.id.pointText);
         final TextView trainerText = findViewById(R.id.trainerText);
-        final TextView adminText = findViewById(R.id.adminText);
 
-        idText.setText("ID : " + userData.getUserID());
-        pwText.setText("PW : " + userData.getUserPW());
-        nameText.setText("Name : " + userData.getName());
-        birthText.setText("Birth : " + userData.getBirth());
-        phoneText.setText("Phone : " + userData.getPhone());
-        weightText.setText("Weight : " + userData.getWeight());
-        heightText.setText("Height : " + userData.getHeight());
-        pointText.setText("Point : " + userData.getPoint());
-        trainerText.setText("Trainer : " + userData.getTrainer());
-        adminText.setText("Admin : " + userData.getAdmin());
+        welcomeText.setText(userData.getUserID()+"("+userData.getName()+") 님 반갑습니다.");
+        trainerText.setText("담당 트레이너 : " + userData.getTrainer());
+        pointText.setText("현재 포인트 : " + userData.getPoint());
 
         final Button noticeButton = findViewById(R.id.noticeButton);
         final Button attendButton = findViewById(R.id.attendButton);
         final Button messengerButton = findViewById(R.id.messengerButton);
         final Button gymProgramButton = findViewById(R.id.gymProgramButton);
+        final Button bodyDataButton = findViewById(R.id.bodyDataButton);
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -90,6 +77,13 @@ public class TraineeMainActivity extends AppCompatActivity {
         messengerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(TraineeMainActivity.this, MessengerActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
+        bodyDataButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(TraineeMainActivity.this, BodyDataActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }

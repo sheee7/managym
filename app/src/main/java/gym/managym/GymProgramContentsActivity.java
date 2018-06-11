@@ -7,6 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -101,6 +102,7 @@ public class GymProgramContentsActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
+                    Log.d("TAG", String.valueOf(success));
                     if(success) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(GymProgramContentsActivity.this);
                         builder.setMessage("프로그램을 삭제하시겠습니까?");
@@ -255,7 +257,7 @@ class GymProgramData implements Parcelable {
 }
 
 class GymProgramDelete extends StringRequest {
-    final static private String URL = "http://jeffjks.cafe24.com/GymProgramDelete.php";
+    final static private String URL = "http://jeffjks.cafe24.com/ProgramDelete.php";
     private Map<String, String> parameters;
 
     public GymProgramDelete(String programNum, Response.Listener<String> listener) {

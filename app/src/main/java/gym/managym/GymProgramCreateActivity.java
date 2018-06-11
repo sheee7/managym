@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,7 +77,7 @@ public class GymProgramCreateActivity extends AppCompatActivity {
                 final String userID;
                 final String programName = programCreateName.getText().toString();
                 final String startTime = createStartTime.getText().toString();
-                final String endTime = createEndTime.getText().toString();
+                final String finishTime = createEndTime.getText().toString();
                 final String frequency;
                 final String programContents = programCreateContent.getText().toString();
 
@@ -134,6 +135,7 @@ public class GymProgramCreateActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
+                                        return;
                                     }
                                 });
                                 builder.create();
@@ -149,13 +151,13 @@ public class GymProgramCreateActivity extends AppCompatActivity {
                     }
                 };
                 if (create) {
-                    ProgramCreate programCreate = new ProgramCreate(programName, userID, startTime, endTime, frequency, programContents, responseListener);
+                    ProgramCreate programCreate = new ProgramCreate(programName, userID, startTime, finishTime, frequency, programContents, responseListener);
                     RequestQueue queue = Volley.newRequestQueue(GymProgramCreateActivity.this);
                     queue.add(programCreate);
                 }
                 else  {
                     String programNum = String.valueOf(programData.getProgramNum());
-                    ProgramModify programModify = new ProgramModify(programNum, programName, startTime, endTime, frequency, programContents, responseListener);
+                    ProgramModify programModify = new ProgramModify(programNum, programName, startTime, finishTime, frequency, programContents, responseListener);
                     RequestQueue queue = Volley.newRequestQueue(GymProgramCreateActivity.this);
                     queue.add(programModify);
                 }
@@ -200,13 +202,13 @@ class ProgramCreate extends StringRequest {
     final static private String URL = "http://jeffjks.cafe24.com/ProgramCreate.php";
     private Map<String, String> parameters;
 
-    public ProgramCreate(String programName, String userID, String startTime, String endTime, String frequency, String contents, Response.Listener<String> listener) {
+    public ProgramCreate(String programName, String userID, String startTime, String finishTime, String frequency, String contents, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
         parameters.put("programName", programName);
-        parameters.put("userID", userID);
+        parameters.put("trainerID", userID);
         parameters.put("startTime", startTime);
-        parameters.put("endTime", endTime);
+        parameters.put("finishTime", finishTime);
         parameters.put("frequency", frequency);
         parameters.put("contents", contents);
     }
@@ -221,15 +223,16 @@ class ProgramModify extends StringRequest {
     final static private String URL = "http://jeffjks.cafe24.com/ProgramModify.php";
     private Map<String, String> parameters;
 
-    public ProgramModify(String programNum, String programName, String startTime, String endTime, String frequency, String contents, Response.Listener<String> listener) {
+    public ProgramModify(String programNum, String programName, String startTime, String finishTime, String frequency, String contents, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
         parameters.put("programNum", programNum);
         parameters.put("programName", programName);
         parameters.put("startTime", startTime);
-        parameters.put("endTime", endTime);
+        parameters.put("finishTime", finishTime);
         parameters.put("frequency", frequency);
         parameters.put("contents", contents);
+        Log.d("TAG", contents);
     }
 
     @Override

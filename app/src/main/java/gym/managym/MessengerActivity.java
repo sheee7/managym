@@ -93,7 +93,7 @@ public class MessengerActivity extends AppCompatActivity {
                     textEmpty.setVisibility(View.VISIBLE);
             }
         };
-        MessengerReceive messengerReceive = new MessengerReceive("MESENGER_"+userData.getUserID(), responseListener);
+        MessengerReceive messengerReceive = new MessengerReceive(userData.getUserID(), responseListener);
         RequestQueue queue = Volley.newRequestQueue(MessengerActivity.this);
         queue.add(messengerReceive);
 
@@ -192,6 +192,7 @@ class MessengerListAdapter extends BaseAdapter {
         TextView contentText = v.findViewById(R.id.messageContentText);
         TextView dateText = v.findViewById(R.id.messageDateText);
         senderText.setText("보낸 사람 : "+messageList.get(i).getSender());
+
         contentText.setText(messageList.get(i).getContent());
         dateText.setText(messageList.get(i).getDate());
 
@@ -207,7 +208,7 @@ class MessengerReceive extends StringRequest {
     public MessengerReceive(String recipient, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
-        parameters.put("recipient", recipient);
+        parameters.put("recipient", "MESSENGER_"+recipient);
     }
 
     @Override
