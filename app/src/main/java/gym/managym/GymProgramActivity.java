@@ -86,6 +86,9 @@ public class GymProgramActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                         count++;
                     }
+
+                    new BackgroundTask().execute();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -94,8 +97,6 @@ public class GymProgramActivity extends AppCompatActivity {
         MyProgramSearch myProgramSearch = new MyProgramSearch(userData.getUserID(), responseListener);
         RequestQueue queue = Volley.newRequestQueue(GymProgramActivity.this);
         queue.add(myProgramSearch);
-
-        new BackgroundTask().execute();
 
         createButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { // Write Notice
@@ -230,11 +231,14 @@ public class GymProgramActivity extends AppCompatActivity {
                     programContents = object.getString("contents");
                     GymProgramListView program = new GymProgramListView(programNum, programName, trainerID, startTime, endTime, programFrequency, programPeriod, programContents);
                     if(myProgramNum.contains(programNum)) {
+                        System.out.println("my"+programNum+"\n");
                         myProgramList.add(program);
+                        myAdapter.notifyDataSetChanged();
                     } else {
+                        System.out.println(programNum+"\n");
                         programList.add(program);
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                     count++;
                 }
             }

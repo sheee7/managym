@@ -133,6 +133,7 @@ class BodyDataAdd extends StringRequest {
         parameters.put("height", height);
         parameters.put("weight", weight);
         parameters.put("BMI", String.valueOf(BMI));
+        parameters.put("userID", userID);
         Log.d("TAG", "BODYDATA_"+userID);
         Log.d("TAG", height);
         Log.d("TAG", weight);
