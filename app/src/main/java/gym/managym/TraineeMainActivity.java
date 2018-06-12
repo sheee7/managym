@@ -48,6 +48,7 @@ public class TraineeMainActivity extends AppCompatActivity {
         final Button messengerButton = findViewById(R.id.messengerButton);
         final Button gymProgramButton = findViewById(R.id.gymProgramButton);
         final Button bodyDataButton = findViewById(R.id.bodyDataButton);
+        final Button workoutDataButton = findViewById(R.id.workoutDataButton);
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -56,14 +57,13 @@ public class TraineeMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         attendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Intent intent = new Intent(TraineeMainActivity.this, attendActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(TraineeMainActivity.this, AttendGymActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
             }
         });
-
         gymProgramButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +72,6 @@ public class TraineeMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         messengerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(TraineeMainActivity.this, MessengerActivity.class);
@@ -83,6 +82,14 @@ public class TraineeMainActivity extends AppCompatActivity {
         bodyDataButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(TraineeMainActivity.this, BodyDataActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
+        workoutDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TraineeMainActivity.this, WorkoutDataActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }

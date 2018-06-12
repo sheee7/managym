@@ -16,9 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <action android:name="android.intent.action.MAIN" />
-                />
             </intent-filter>
         </activity>
+        <activity android:name=".AttendGymActivity" />
         <activity android:name=".GymProgramActivity" />
         <activity android:name=".GymProgramContentsActivity" />
         <activity android:name=".GymProgramCreateActivity" />
@@ -31,11 +31,11 @@
         <activity android:name=".UserRegisterActivity" />
         <activity android:name=".UserContentActivity" />
         <activity android:name=".UserModifyActivity" />
-        <activity android:name="gym.managym.BodyDataActivity" />
-        <activity android:name="gym.managym.BodyDataContentActivity" />
-        <activity android:name="gym.managym.BodyDataWriteActivity" />
+        <activity android:name=".BodyDataActivity" />
+        <activity android:name=".BodyDataWriteActivity" />
         <activity android:name=".MessengerActivity" />
-        <activity android:name=".MessengerWriteActivity"></activity>
+        <activity android:name=".MessengerWriteActivity"/>
+        <activity android:name=".WorkoutDataActivity" />
     </application>
 
 </manifest>
