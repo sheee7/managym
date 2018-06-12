@@ -157,6 +157,7 @@ class WorkoutDataAdd extends StringRequest {
     public WorkoutDataAdd(String dataName, String userID, String startTime, String endTime, int time, String strength, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
+        parameters.put("userID", userID);
         parameters.put("table", "WORKOUTDATA_"+userID);
         parameters.put("dataName", dataName);
         parameters.put("startTime", startTime);

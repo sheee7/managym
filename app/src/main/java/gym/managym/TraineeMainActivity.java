@@ -41,7 +41,6 @@ public class TraineeMainActivity extends AppCompatActivity {
         final TextView trainerText = findViewById(R.id.trainerText);
 
         welcomeText.setText(userData.getUserID()+"("+userData.getName()+") 님 반갑습니다.");
-        trainerText.setText("담당 트레이너 : " + userData.getTrainer());
         pointText.setText("현재 포인트 : " + userData.getPoint());
 
         final Button noticeButton = findViewById(R.id.noticeButton);
