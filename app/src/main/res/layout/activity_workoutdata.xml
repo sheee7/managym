@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_bodyData"
+    android:id="@+id/activity_notice"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
@@ -10,14 +10,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="5dp"
-    tools:context=".BodyDataActivity">
-
-    <Button
-        android:id="@+id/writeButton"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="Write" />
+    tools:context=".NoticeActivity">
 
     <TextView
         android:id="@+id/bodyDataList"
@@ -25,21 +18,25 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="신체정보"
+        android:text="운동기록"
         android:textColor="#052e43"
         android:textSize="25dp"
         android:textStyle="bold" />
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chartWeight"
+        android:id="@+id/chartWorkoutTime"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="170dp" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chartBMI"
-        android:layout_marginTop="20dp"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="170dp" />
+        android:layout_height="match_parent"
+        android:id="@+id/workoutDataListView"
+        android:layout_margin="10dp"
+        android:dividerHeight="5dp"
+        android:divider="#ffffff"
+        >
+    </ListView>
 
 </LinearLayout>

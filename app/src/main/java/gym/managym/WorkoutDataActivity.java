@@ -4,17 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,56 +20,51 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BodyDataActivity extends AppCompatActivity {
+public class WorkoutDataActivity extends AppCompatActivity {
+    private ListView dataListView;
+    private WorkoutDataListAdapter adapter;
+    private ArrayList<WorkoutDataListView> dataList;
+    private ArrayList<Entry> entriesTime;
     private Bundle bundle;
     private UserData userData;
-    public static Activity bodyDataActivity;
-    ArrayList<Entry> entriesHeight;
-    ArrayList<Entry> entriesWeight;
-    ArrayList<Entry> entriesBMI;
+    public static Activity workoutDataActivity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bodydata);
+        setContentView(R.layout.activity_workoutdata);
+
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
-        bodyDataActivity = BodyDataActivity.this;
+        workoutDataActivity = WorkoutDataActivity.this;
 
-        final Button writeButton = findViewById(R.id.writeButton);
-        final LineChart lineChartWeight = findViewById(R.id.chartWeight);
-        //final LineChart lineChartHeight = findViewById(R.id.chartHeight);
-        final LineChart lineChartBMI = findViewById(R.id.chartBMI);
-        entriesHeight = new ArrayList<>();
-        entriesWeight = new ArrayList<>();
-        entriesBMI = new ArrayList<>();
+        final LineChart lineChartTime = findViewById(R.id.chartWorkoutTime);
+
+        dataListView = findViewById(R.id.workoutDataListView);
+        dataList = new ArrayList<>();
+        entriesTime = new ArrayList<>();
+
+        adapter = new WorkoutDataListAdapter(getApplicationContext(), dataList);
+        dataListView.setAdapter(adapter);
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -81,42 +72,35 @@ public class BodyDataActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     JSONArray jsonArray = jsonResponse.getJSONArray("response");
-                    int count = 0, height, weight;
-                    String date;
-                    float BMI;
+                    int count = 0;
+                    String dataName, startTime, endTime, date;
+                    int time, strength;
                     while(count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
-                        height = object.getInt("height");
-                        weight = object.getInt("weight");
-                        date = object.getString("recordDate");
-                        BMI = (float) object.getDouble("BMI");
+                        dataName = object.getString("dataName");
+                        startTime = object.getString("startTime");
+                        endTime = object.getString("endTime");
+                        date = object.getString("date");
+                        time = object.getInt("time");
+                        strength = object.getInt("strength");
 
-                        entriesHeight.add(new Entry(count+1, height));
-                        entriesWeight.add(new Entry(count+1, weight));
-                        entriesBMI.add(new Entry(count+1, BMI));
+                        entriesTime.add(new Entry(count+1, time));
+                        WorkoutDataListView data = new WorkoutDataListView(dataName, startTime, endTime, strength, date);
+                        dataList.add(data);
+                        adapter.notifyDataSetChanged();
+
                         count++;
                     }
-                    drawChart(entriesWeight, lineChartWeight, "Weight");
-                    //drawChart(entriesHeight, lineChartHeight, "Height");
-                    drawChart(entriesBMI, lineChartBMI, "BMI");
+                    drawChart(entriesTime, lineChartTime, "Weight");
                 }
                 catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         };
-        BodyDataReceive bodyDataReceive = new BodyDataReceive(userData.getUserID(), responseListener);
-        RequestQueue queue = Volley.newRequestQueue(BodyDataActivity.this);
-        queue.add(bodyDataReceive);
-
-        writeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { // Write BodyData
-                Intent intent = new Intent(BodyDataActivity.this, BodyDataWriteActivity.class);
-                intent.putExtra("userData", userData);
-                startActivity(intent);
-                finish();
-            }
-        });
+        WorkoutDataReceive workoutDataReceive = new WorkoutDataReceive(userData.getUserID(), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(WorkoutDataActivity.this);
+        queue.add(workoutDataReceive);
     }
 
     private void drawChart(ArrayList<Entry> entriesWeight, LineChart lineChartWeight, String dsc) {
@@ -198,14 +182,92 @@ public class BodyDataActivity extends AppCompatActivity {
     }
 }
 
-class BodyDataReceive extends StringRequest {
-    final static private String URL = "http://jeffjks.cafe24.com/BodyDataReceive.php";
+class WorkoutDataListView {
+    String workoutName;
+    String startTime;
+    String endTime;
+    int time;   //분으로 기록
+    int strength;
+    String date;
+
+    public WorkoutDataListView(String workoutName, String startTime, String endTime, int strength, String date) {
+        this.workoutName = workoutName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.setTime();
+        this.strength = strength;
+        this.date = date;
+    }
+
+    public String getWorkoutName() {
+        return this.workoutName;
+    }
+    public int getTime() {
+        return this.time;
+    }
+    public void setTime() {
+        String[] startTimeSet = this.startTime.split(":");
+        String[] endTimeSet = this.endTime.split(":");
+        this.time = (Integer.parseInt(endTimeSet[0]) - Integer.parseInt(startTimeSet[0])) * 60
+                + Integer.parseInt(endTimeSet[1]) - Integer.parseInt(startTimeSet[1]);
+    }
+    public int getStrength() {
+        return this.strength;
+    }
+    public String getDate() {
+        return this.date;
+    }
+}
+
+class WorkoutDataListAdapter extends BaseAdapter {
+    private Context context;
+    private List<WorkoutDataListView> programList;
+
+    public WorkoutDataListAdapter(Context context, List<WorkoutDataListView> dataList) {
+        this.context = context;
+        this.programList = dataList;
+    }
+
+    @Override
+    public int getCount() {
+        return programList.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return programList.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        View v = View.inflate(context, R.layout.activity_workoutdata_listview, null);
+        TextView nameText = v.findViewById(R.id.programNameText);
+        TextView dateText = v.findViewById(R.id.writeDate);
+        TextView timeText = v.findViewById(R.id.workTime);
+
+        nameText.setText(programList.get(i).getWorkoutName());
+        dateText.setText(programList.get(i).getDate());
+        timeText.setText(programList.get(i).getTime());
+
+        v.setTag(programList.get(i).getDate());
+        return v;
+    }
+
+}
+
+class WorkoutDataReceive extends StringRequest {
+    final static private String URL = "http://jeffjks.cafe24.com/WorkoutDataReceive.php"; //need!
     private Map<String, String> parameters;
 
-    public BodyDataReceive(String userID, Response.Listener<String> listener) {
+    public WorkoutDataReceive(String userID, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
-        parameters.put("table", "BODYDATA_"+userID);
+        parameters.put("table", "WORKOUTDATA_"+userID);
     }
 
     @Override

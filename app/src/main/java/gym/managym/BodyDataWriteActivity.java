@@ -51,53 +51,53 @@ public class BodyDataWriteActivity extends AppCompatActivity {
                     dialog = builder.setMessage("키를 입력하세요.").setNegativeButton("OK", null).create();
                     dialog.show();
                     return;
-                } else if (bodyDataWriteWeight.equals("")) {
+                }
+                if (bodyDataWriteWeight.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(BodyDataWriteActivity.this);
                     dialog = builder.setMessage("몸무게를 입력하세요.").setNegativeButton("OK", null).create();
                     dialog.show();
                     return;
-                } else {
-                    Response.Listener<String> responseListenerB = new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject jsonResponse = new JSONObject(response);
-                                boolean success = jsonResponse.getBoolean("success");
-                                if (success) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(BodyDataWriteActivity.this);
-                                    builder.setMessage("신체정보를 추가하시겠습니까?");
-                                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            finish();
-                                        }
-                                    });
-                                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    builder.create();
-                                    builder.show();
-
-                                    String date = jsonResponse.getString("recordDate");
-                                    Log.d("TAG", date);
-                                } else {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(BodyDataWriteActivity.this);
-                                    dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
-                                    dialog.show();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-                    BodyDataAdd bodyDataAdd = new BodyDataAdd(height, weight, userID, BMI, responseListenerB);
-                    RequestQueue queue = Volley.newRequestQueue(BodyDataWriteActivity.this);
-                    queue.add(bodyDataAdd);
                 }
+                Response.Listener<String> responseListenerB = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(BodyDataWriteActivity.this);
+                                builder.setMessage("신체정보를 추가하시겠습니까?");
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                });
+                                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.create();
+                                builder.show();
+
+                                String date = jsonResponse.getString("recordDate");
+                                Log.d("TAG", date);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(BodyDataWriteActivity.this);
+                                dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
+                                dialog.show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                BodyDataAdd bodyDataAdd = new BodyDataAdd(height, weight, userID, BMI, responseListenerB);
+                RequestQueue queue = Volley.newRequestQueue(BodyDataWriteActivity.this);
+                queue.add(bodyDataAdd);
             }
         });
     }
@@ -122,25 +122,25 @@ public class BodyDataWriteActivity extends AppCompatActivity {
     }
 }
 
-    class BodyDataAdd extends StringRequest {
-        final static private String URL = "http://jeffjks.cafe24.com/BodyDataAdd.php";
-        private Map<String, String> parameters;
+class BodyDataAdd extends StringRequest {
+    final static private String URL = "http://jeffjks.cafe24.com/BodyDataAdd.php";
+    private Map<String, String> parameters;
 
-        public BodyDataAdd(String height, String weight, String userID, double BMI, Response.Listener<String> listener) {
-            super(Method.POST, URL, listener, null);
-            parameters = new HashMap<>();
-            parameters.put("table", "BODYDATA_"+userID);
-            parameters.put("height", height);
-            parameters.put("weight", weight);
-            parameters.put("BMI", String.valueOf(BMI));
-            Log.d("TAG", "BODYDATA_"+userID);
-            Log.d("TAG", height);
-            Log.d("TAG", weight);
-            Log.d("TAG", String.valueOf(BMI));
-        }
+    public BodyDataAdd(String height, String weight, String userID, double BMI, Response.Listener<String> listener) {
+        super(Method.POST, URL, listener, null);
+        parameters = new HashMap<>();
+        parameters.put("table", "BODYDATA_"+userID);
+        parameters.put("height", height);
+        parameters.put("weight", weight);
+        parameters.put("BMI", String.valueOf(BMI));
+        Log.d("TAG", "BODYDATA_"+userID);
+        Log.d("TAG", height);
+        Log.d("TAG", weight);
+        Log.d("TAG", String.valueOf(BMI));
+    }
 
-        @Override
-        public Map<String, String> getParams() {
+    @Override
+    public Map<String, String> getParams() {
             return parameters;
         }
-    }
+}
