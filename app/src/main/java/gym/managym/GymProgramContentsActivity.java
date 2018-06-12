@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -43,7 +44,7 @@ public class GymProgramContentsActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         userData = bundle.getParcelable("userData");
         programData = bundle.getParcelable("programData");
-        myProgram = bundle.getParcelable("myProgram");
+        myProgram = getIntent().getBooleanExtra("myProgram", false);
 
 
         programName.setText(programData.getProgramName());
@@ -56,6 +57,13 @@ public class GymProgramContentsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if(userData.getAdmin() == 0) {
             getMenuInflater().inflate(R.menu.activity_menu_userattend, menu);
+            MenuItem attendMenu = menu.findItem(R.id.menu_action_attend);
+            MenuItem cancleMenu = menu.findItem(R.id.menu_action_cancle);
+            if(myProgram) {
+                attendMenu.setVisible(false);
+            } else {
+                cancleMenu.setVisible(false);
+            }
         }
         else {
             getMenuInflater().inflate(R.menu.activity_menu_content, menu);
@@ -77,8 +85,10 @@ public class GymProgramContentsActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.menu_action_attend:
+                attendProgram();
                 break;
             case R.id.menu_action_cancle:
+                cancleProgram();
                 break;
             default:
                 break;
@@ -134,6 +144,88 @@ public class GymProgramContentsActivity extends AppCompatActivity {
         GymProgramDelete programDelete = new GymProgramDelete(programData.getProgramNumToString(), responseListener);
         RequestQueue queue = Volley.newRequestQueue(GymProgramContentsActivity.this);
         queue.add(programDelete);
+    }
+
+    private void attendProgram() {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    Log.d("TAG", String.valueOf(success));
+                    if(success) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GymProgramContentsActivity.this);
+                        builder.setMessage("이 프로그램을 신청하겠습니까?");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                refreshProgramIntent();
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.create();
+                        builder.show();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GymProgramContentsActivity.this);
+                        dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
+                        dialog.show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        GymProgramAttend programAttend = new GymProgramAttend(userData.getUserID(), programData.getProgramNumToString(), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(GymProgramContentsActivity.this);
+        queue.add(programAttend);
+    }
+
+    private void cancleProgram() {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    Log.d("TAG", String.valueOf(success));
+                    if(success) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GymProgramContentsActivity.this);
+                        builder.setMessage("이 프로그램을 신청 취소하겠습니까?");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                refreshProgramIntent();
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.create();
+                        builder.show();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GymProgramContentsActivity.this);
+                        dialog = builder.setMessage("Failed").setNegativeButton("Retry", null).create();
+                        dialog.show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        GymProgramCancle programCancle = new GymProgramCancle(userData.getUserID(), programData.getProgramNumToString(), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(GymProgramContentsActivity.this);
+        queue.add(programCancle);
     }
 
     private void refreshProgramIntent() {
@@ -263,6 +355,36 @@ class GymProgramDelete extends StringRequest {
     public GymProgramDelete(String programNum, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
         parameters = new HashMap<>();
+        parameters.put("programNum", programNum);
+    }
+
+    @Override
+    public Map<String, String> getParams() { return parameters;}
+}
+
+class GymProgramAttend extends StringRequest {
+    final static private String URL = "http://jeffjks.cafe24.com/ProgramAttend.php";
+    private Map<String, String> parameters;
+
+    public GymProgramAttend(String userID, String programNum, Response.Listener<String> listener) {
+        super(Method.POST, URL, listener, null);
+        parameters = new HashMap<>();
+        parameters.put("userID", userID);
+        parameters.put("programNum", programNum);
+    }
+
+    @Override
+    public Map<String, String> getParams() { return parameters;}
+}
+
+class GymProgramCancle extends StringRequest {
+    final static private String URL = "http://jeffjks.cafe24.com/ProgramCancle.php";
+    private Map<String, String> parameters;
+
+    public GymProgramCancle(String userID, String programNum, Response.Listener<String> listener) {
+        super(Method.POST, URL, listener, null);
+        parameters = new HashMap<>();
+        parameters.put("userID", userID);
         parameters.put("programNum", programNum);
     }
 
