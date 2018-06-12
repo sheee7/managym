@@ -50,7 +50,7 @@
             <Button
                 android:id="@+id/attendButton"
                 android:layout_width="160dp"
-                android:layout_height="60dp"
+                android:layout_height="65dp"
                 android:layout_marginBottom="3dp"
                 android:layout_marginRight="3dp"
                 android:layout_gravity="start"
@@ -64,27 +64,27 @@
                 <Button
                     android:id="@+id/workoutDataButton"
                     android:layout_width="80dp"
-                    android:layout_height="90dp"
-                    android:layout_marginRight="3dp"
+                    android:layout_height="85dp"
                     android:layout_gravity="start"
+                    android:layout_marginRight="3dp"
                     android:background="@drawable/img_workout" />
 
                 <Button
                     android:id="@+id/bodyDataButton"
                     android:layout_width="80dp"
-                    android:layout_height="90dp"
-                    android:layout_marginRight="3dp"
+                    android:layout_height="85dp"
                     android:layout_gravity="end"
+                    android:layout_marginRight="3dp"
                     android:background="@drawable/img_bodydata" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/pointRecordButton"
                 android:layout_width="160dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginRight="3dp"
+                android:layout_height="58dp"
                 android:layout_gravity="start"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="-3dp"
                 android:background="@drawable/img_point" />
         </LinearLayout>
 
@@ -110,17 +110,17 @@
                 <Button
                     android:id="@+id/gymProgramButton"
                     android:layout_width="87dp"
-                    android:layout_height="90dp"
-                    android:layout_marginRight="3dp"
+                    android:layout_height="94dp"
                     android:layout_gravity="end"
+                    android:layout_marginRight="3dp"
                     android:background="@drawable/img_gymprogram" />
 
                 <Button
                     android:id="@+id/messengerButton"
-                    android:layout_width="87dp"
-                    android:layout_height="90dp"
-                    android:layout_marginLeft="3dp"
+                    android:layout_width="92dp"
+                    android:layout_height="96dp"
                     android:layout_gravity="end"
+                    android:layout_marginLeft="0dp"
                     android:background="@drawable/img_messenger" />
             </LinearLayout>
 

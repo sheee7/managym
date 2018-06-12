@@ -49,6 +49,7 @@ public class TraineeMainActivity extends AppCompatActivity {
         final Button gymProgramButton = findViewById(R.id.gymProgramButton);
         final Button bodyDataButton = findViewById(R.id.bodyDataButton);
         final Button workoutDataButton = findViewById(R.id.workoutDataButton);
+        final Button pointRecordButton = findViewById(R.id.pointRecordButton);
 
         noticeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -75,6 +76,13 @@ public class TraineeMainActivity extends AppCompatActivity {
         messengerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(TraineeMainActivity.this, MessengerActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
+        pointRecordButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(TraineeMainActivity.this, PointRecordActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }

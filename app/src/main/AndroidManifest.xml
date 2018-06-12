@@ -33,6 +33,8 @@
         <activity android:name=".UserModifyActivity" />
         <activity android:name=".BodyDataActivity" />
         <activity android:name=".BodyDataWriteActivity" />
+        <activity android:name=".PointRecordActivity" />
+        <activity android:name=".PointWriteActivity" />
         <activity android:name=".MessengerActivity" />
         <activity android:name=".MessengerWriteActivity"/>
         <activity android:name=".WorkoutDataActivity" />

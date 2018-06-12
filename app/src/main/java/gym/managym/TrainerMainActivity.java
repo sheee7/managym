@@ -33,6 +33,7 @@ public class TrainerMainActivity extends AppCompatActivity {
         final Button noticeButton = findViewById(R.id.noticeButton);
         final Button userManagementButton = findViewById(R.id.userManagementButton);
         final Button messengerButton = findViewById(R.id.messengerButton);
+        final Button managePointButton = findViewById(R.id.managePointButton);
 
         gymProgramButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +62,13 @@ public class TrainerMainActivity extends AppCompatActivity {
         messengerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(TrainerMainActivity.this, MessengerActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
+        managePointButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(TrainerMainActivity.this, PointWriteActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
