@@ -221,21 +221,21 @@ class WorkoutDataListView {
 
 class WorkoutDataListAdapter extends BaseAdapter {
     private Context context;
-    private List<WorkoutDataListView> programList;
+    private List<WorkoutDataListView> dataList;
 
     public WorkoutDataListAdapter(Context context, List<WorkoutDataListView> dataList) {
         this.context = context;
-        this.programList = dataList;
+        this.dataList = dataList;
     }
 
     @Override
     public int getCount() {
-        return programList.size();
+        return dataList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return programList.get(i);
+        return dataList.get(i);
     }
 
     @Override
@@ -246,15 +246,15 @@ class WorkoutDataListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(context, R.layout.activity_workoutdata_listview, null);
-        TextView nameText = v.findViewById(R.id.programNameText);
+        TextView nameText = v.findViewById(R.id.workoutDataNameText);
         TextView dateText = v.findViewById(R.id.writeDate);
         TextView timeText = v.findViewById(R.id.workTime);
 
-        nameText.setText(programList.get(i).getWorkoutName());
-        dateText.setText(programList.get(i).getDate());
-        timeText.setText(programList.get(i).getTime());
+        nameText.setText(dataList.get(i).getWorkoutName());
+        dateText.setText(dataList.get(i).getDate());
+        timeText.setText(dataList.get(i).getTime() + "min");
 
-        v.setTag(programList.get(i).getDate());
+        v.setTag(dataList.get(i).getDate());
         return v;
     }
 
